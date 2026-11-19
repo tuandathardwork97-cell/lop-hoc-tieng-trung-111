@@ -106,8 +106,9 @@
                 <input type="password" id="password" placeholder="Mật khẩu (từ 6 ký tự)" class="w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
             </div>
 
-            <div class="mt-5">
+           <div class="mt-5">
                 <button id="btnSubmitLogin" onclick="login()" class="w-full btn-pastel-pink text-white py-3 rounded-2xl font-bold text-sm transition">Đăng Nhập</button>
+                <button id="btnForgotPass" onclick="forgotPassword()" class="w-full text-xs text-rose-400 hover:text-rose-600 font-bold mt-2.5 transition">Quên mật khẩu?</button>
                 <button id="btnSubmitRegister" onclick="register()" class="hidden w-full btn-pastel-mint text-white py-3 rounded-2xl font-bold text-sm transition">Tạo Tài Khoản Mới</button>
             </div>
 
@@ -118,10 +119,10 @@
         <div id="mainApp" class="hidden space-y-6">
 
             <!-- Menu chuyển Tab -->
-           <div class="mt-5">
-                <button id="btnSubmitLogin" onclick="login()" class="w-full btn-pastel-pink text-white py-3 rounded-2xl font-bold text-sm transition">Đăng Nhập</button>
-                <button id="btnForgotPass" onclick="forgotPassword()" class="w-full text-xs text-rose-400 hover:text-rose-600 font-bold mt-2.5 transition">Quên mật khẩu?</button>
-                <button id="btnSubmitRegister" onclick="register()" class="hidden w-full btn-pastel-mint text-white py-3 rounded-2xl font-bold text-sm transition">Tạo Tài Khoản Mới</button>
+            <div class="pastel-card p-1.5 rounded-2xl flex gap-1.5 overflow-x-auto">
+                <button onclick="switchTab('lessons')" id="tabBtn-lessons" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-sm transition whitespace-nowrap">📖 Bài học</button>
+                <button onclick="switchTab('quizzes')" id="tabBtn-quizzes" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-sm transition whitespace-nowrap">📝 Bài tập & Kiểm tra</button>
+                <button onclick="switchTab('progress')" id="tabBtn-progress" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-sm transition whitespace-nowrap">📊 Tiến trình & Điểm</button>
             </div>
 
             <!-- ==================== TAB 1: BÀI HỌC ==================== -->
@@ -230,9 +231,19 @@
         </div>
     </div>
 
-    <!-- Pop-up chúc mừng sau khi nộp bài -->
+   <!-- Pop-up chúc mừng sau khi nộp bài -->
     <div id="resultModal" class="hidden fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
-       <!-- Pop-up đặt lại mật khẩu khi bấm link từ Email -->
+        <div class="bg-white rounded-3xl max-w-sm w-full p-7 text-center border-2 border-pink-100 shadow-2xl">
+            <div id="resultEmoji" class="text-5xl mb-3">🎉</div>
+            <h3 class="text-xl font-bold text-gray-700">Hoàn thành bài làm!</h3>
+            <div id="resultScore" class="text-4xl font-extrabold text-rose-500 my-3">10 / 10</div>
+            <p id="resultDetail" class="text-sm font-semibold text-gray-600"></p>
+            <p id="resultMessage" class="text-xs text-gray-400 mt-1 mb-6 zh-text"></p>
+            <button onclick="closeResultModal()" class="w-full btn-pastel-pink text-white py-3 rounded-2xl font-bold text-sm transition">Xem bảng điểm 📊</button>
+        </div>
+    </div>
+
+    <!-- Pop-up đặt lại mật khẩu khi bấm link từ Email -->
     <div id="recoveryModal" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-7 border-2 border-pink-100 shadow-2xl">
             <h3 class="text-xl font-bold text-rose-500 text-center mb-2">🔐 Đặt mật khẩu mới</h3>
@@ -333,11 +344,12 @@
             checkUser();
         }
 
-        function switchAuthTab(mode) {
+      function switchAuthTab(mode) {
             const isRegister = mode === 'register';
             document.getElementById('fullName').classList.toggle('hidden', !isRegister);
             document.getElementById('btnSubmitLogin').classList.toggle('hidden', isRegister);
             document.getElementById('btnSubmitRegister').classList.toggle('hidden', !isRegister);
+            document.getElementById('btnForgotPass').classList.toggle('hidden', isRegister);
             document.getElementById('authTitle').innerText = isRegister ? 'Tạo tài khoản mới' : 'Chào mừng trở lại!';
 
             document.getElementById('authTab-login').className = isRegister
