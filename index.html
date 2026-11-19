@@ -85,7 +85,7 @@
 
     <div class="max-w-4xl mx-auto px-4 mt-6">
 
-       <!-- KHU VỰC ĐĂNG NHẬP / ĐĂNG KÝ -->
+        <!-- KHU VỰC ĐĂNG NHẬP / ĐĂNG KÝ -->
         <div id="authSection" class="pastel-card p-7 md:p-9 rounded-3xl max-w-md mx-auto mt-10">
             <div class="text-center mb-5">
                 <div class="w-16 h-16 mx-auto mb-3 rounded-3xl bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center text-3xl shadow-inner">🐼</div>
@@ -100,15 +100,14 @@
             </div>
 
             <div class="space-y-3">
-                <!-- Ô Họ tên: mặc định ẩn khi đang ở tab Đăng nhập -->
                 <input type="text" id="fullName" placeholder="Họ và Tên của bạn" class="hidden w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
                 <input type="email" id="email" placeholder="Email (VD: tenban@gmail.com)" class="w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
                 <input type="password" id="password" placeholder="Mật khẩu (từ 6 ký tự)" class="w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
             </div>
 
-           <div class="mt-5">
+            <div class="mt-5">
                 <button id="btnSubmitLogin" onclick="login()" class="w-full btn-pastel-pink text-white py-3 rounded-2xl font-bold text-sm transition">Đăng Nhập</button>
-                <button id="btnForgotPass" onclick="forgotPassword()" class="w-full text-xs text-rose-400 hover:text-rose-600 font-bold mt-2.5 transition">Quên mật khẩu?</button>
+                <button id="btnForgotPass" onclick="openForgotModal()" class="w-full text-xs text-rose-400 hover:text-rose-600 font-bold mt-2.5 transition">Quên mật khẩu?</button>
                 <button id="btnSubmitRegister" onclick="register()" class="hidden w-full btn-pastel-mint text-white py-3 rounded-2xl font-bold text-sm transition">Tạo Tài Khoản Mới</button>
             </div>
 
@@ -231,7 +230,7 @@
         </div>
     </div>
 
-   <!-- Pop-up chúc mừng sau khi nộp bài -->
+    <!-- Pop-up chúc mừng sau khi nộp bài -->
     <div id="resultModal" class="hidden fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-7 text-center border-2 border-pink-100 shadow-2xl">
             <div id="resultEmoji" class="text-5xl mb-3">🎉</div>
@@ -240,6 +239,20 @@
             <p id="resultDetail" class="text-sm font-semibold text-gray-600"></p>
             <p id="resultMessage" class="text-xs text-gray-400 mt-1 mb-6 zh-text"></p>
             <button onclick="closeResultModal()" class="w-full btn-pastel-pink text-white py-3 rounded-2xl font-bold text-sm transition">Xem bảng điểm 📊</button>
+        </div>
+    </div>
+
+    <!-- Pop-up nhập Gmail khi bấm Quên mật khẩu -->
+    <div id="forgotModal" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-7 border-2 border-pink-100 shadow-2xl">
+            <h3 class="text-xl font-bold text-rose-500 text-center mb-2">📩 Quên mật khẩu?</h3>
+            <p class="text-xs text-gray-400 text-center mb-5">Nhập địa chỉ Gmail bạn đã dùng để đăng ký, hệ thống sẽ gửi link đặt lại mật khẩu về mail.</p>
+            <input type="email" id="forgotEmailInput" placeholder="Nhập Gmail (VD: tenban@gmail.com)" class="w-full p-3 bg-white border-2 border-pink-100 rounded-2xl text-sm mb-3 focus:outline-none focus:border-pink-300">
+            <p id="forgotModalMsg" class="text-xs text-center font-semibold mb-4"></p>
+            <div class="flex gap-2.5">
+                <button onclick="sendResetEmail()" class="flex-1 btn-pastel-pink text-white py-2.5 rounded-2xl font-bold text-sm transition">Gửi link</button>
+                <button onclick="closeForgotModal()" class="px-4 bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-2xl font-bold text-sm transition">Đóng</button>
+            </div>
         </div>
     </div>
 
@@ -344,7 +357,7 @@
             checkUser();
         }
 
-      function switchAuthTab(mode) {
+        function switchAuthTab(mode) {
             const isRegister = mode === 'register';
             document.getElementById('fullName').classList.toggle('hidden', !isRegister);
             document.getElementById('btnSubmitLogin').classList.toggle('hidden', isRegister);
@@ -694,18 +707,42 @@
                 `;
             }).join('');
         }
-               // ==================== QUÊN MẬT KHẨU QUA EMAIL ====================
-        async function forgotPassword() {
-            const email = document.getElementById('email').value.trim();
-            if (!email) return showMessage("Vui lòng nhập Email của bạn vào ô trên trước khi bấm Quên mật khẩu!");
 
-            showMessage("Đang gửi link khôi phục về email...", "#8B5CF6");
+        // ==================== QUÊN MẬT KHẨU QUA EMAIL ====================
+        function openForgotModal() {
+            document.getElementById('forgotEmailInput').value = '';
+            document.getElementById('forgotModalMsg').innerText = '';
+            document.getElementById('forgotModal').classList.remove('hidden');
+        }
+
+        function closeForgotModal() {
+            document.getElementById('forgotModal').classList.add('hidden');
+        }
+
+        async function sendResetEmail() {
+            const email = document.getElementById('forgotEmailInput').value.trim();
+            const msgEl = document.getElementById('forgotModalMsg');
+
+            if (!email || !email.includes('@')) {
+                msgEl.style.color = "#E11D48";
+                msgEl.innerText = "Vui lòng nhập đầy đủ Gmail (có @gmail.com)!";
+                return;
+            }
+
+            msgEl.style.color = "#8B5CF6";
+            msgEl.innerText = "Đang gửi link khôi phục về email...";
+
             const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
                 redirectTo: window.location.origin + window.location.pathname
             });
 
-            if (error) showMessage("Lỗi gửi mail: " + error.message, "#E11D48");
-            else showMessage("✅ Đã gửi link đặt lại mật khẩu! Hãy kiểm tra hộp thư (và mục Spam) của bạn.", "#10B981");
+            if (error) {
+                msgEl.style.color = "#E11D48";
+                msgEl.innerText = "Lỗi gửi mail: " + error.message;
+            } else {
+                msgEl.style.color = "#10B981";
+                msgEl.innerText = "✅ Đã gửi link đặt lại mật khẩu! Hãy kiểm tra hộp thư (và mục Spam) của bạn.";
+            }
         }
 
         // Tự động mở khung đặt mật khẩu mới khi bấm link từ Email quay lại web
@@ -728,6 +765,7 @@
                 checkUser();
             }
         }
+
         checkUser();
     </script>
 </body>
