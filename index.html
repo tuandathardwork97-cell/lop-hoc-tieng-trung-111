@@ -242,29 +242,30 @@
                 </div>
 
                 <!-- Thanh tinh chỉnh Giọng đọc & Khẩu âm chuẩn Phổ thông Bắc Kinh -->
-                <div class="pastel-card px-3.5 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-2 bg-gradient-to-r from-white via-pink-50/40 to-purple-50/40">
-                    <div class="flex flex-wrap items-center gap-1.5">
-                        <span class="text-xs font-bold text-rose-500">🎙️ Khẩu âm:</span>
-                        <select id="voiceEngineSelect" onchange="onVoiceEngineChange()" class="px-2 py-1.5 rounded-xl bg-white border border-pink-200 text-xs font-bold text-gray-700 focus:outline-none">
-                            <option value="ai">✨ AI Bản Xứ (Bắc Kinh)</option>
-                            <option value="browser">💻 Hệ Thống (Nhanh)</option>
-                        </select>
-                        <select id="voiceChoiceSelect" onchange="onVoiceChoiceChange()" class="px-2 py-1.5 rounded-xl bg-white border border-purple-200 text-xs font-semibold text-purple-700 max-w-[190px] focus:outline-none"></select>
-                        <select id="voiceRateSelect" onchange="saveVoicePrefs()" class="px-2 py-1.5 rounded-xl bg-white border border-pink-200 text-xs font-bold text-gray-600 focus:outline-none">
-                            <option value="0.65">🐢 0.65x</option>
-                            <option value="0.85">🚶 0.85x</option>
-                            <option value="1.0" selected>⚡ 1.0x</option>
-                            <option value="1.15">🚀 1.15x</option>
-                        </select>
+                <div class="pastel-card px-3.5 py-2.5 rounded-2xl space-y-2 bg-gradient-to-r from-white via-pink-50/40 to-purple-50/40">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="text-xs font-bold text-rose-500">🎙️ Khẩu âm:</span>
+                            <select id="voiceEngineSelect" onchange="onVoiceEngineChange()" class="px-2 py-1.5 rounded-xl bg-white border border-pink-200 text-xs font-bold text-gray-700 focus:outline-none">
+                                <option value="browser">💻 Hệ Thống (Nam / Nữ)</option>
+                                <option value="ai">✨ AI Bản Xứ (Cần Key)</option>
+                            </select>
+                            <select id="voiceChoiceSelect" onchange="onVoiceChoiceChange()" class="px-2 py-1.5 rounded-xl bg-white border border-purple-200 text-xs font-semibold text-purple-700 max-w-[205px] focus:outline-none"></select>
+                            <select id="voiceRateSelect" onchange="saveVoicePrefs()" class="px-2 py-1.5 rounded-xl bg-white border border-pink-200 text-xs font-bold text-gray-600 focus:outline-none">
+                                <option value="0.65">🐢 0.65x</option>
+                                <option value="0.85">🚶 0.85x</option>
+                                <option value="1.0" selected>⚡ 1.0x</option>
+                                <option value="1.15">🚀 1.15x</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span id="audioStatusBadge" class="hidden text-[11px] font-bold text-purple-600 animate-pulse">Đang đọc...</span>
+                            <button onclick="openApiKeyModal()" id="btnApiKey" title="Nhập Gemini API Key miễn phí để mở 4 giọng AI Nam/Nữ" class="px-2.5 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200 text-xs font-bold transition">🔑 Key AI</button>
+                            <button onclick="testCurrentVoice()" class="px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-xs font-bold transition">🔊 Thử</button>
+                            <button onclick="stopAllAudio()" title="Dừng đọc" class="px-2 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold transition">⏹</button>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-1.5">
-                        <span id="audioStatusBadge" class="hidden text-[11px] font-bold text-purple-600 animate-pulse">Đang đọc...</span>
-                        <button onclick="openAiKeyModal()" id="btnAiKey" title="Cài Gemini API Key miễn phí để mở 4 giọng AI bản xứ" class="px-2.5 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200 text-xs font-bold transition">🔑 Key AI</button>
-                        <button onclick="testCurrentVoice()" class="px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-xs font-bold transition">🔊 Thử</button>
-                        <button onclick="stopAllAudio()" title="Dừng đọc" class="px-2 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold transition">⏹</button>
-                    </div>
-                    <div id="voiceInfoHint" class="w-full text-[11px] text-gray-400 flex items-center justify-between pt-0.5"></div>
-                </div>
+                    <div id="voiceInfoLine" class="text-[11px] text-gray-500 font-semibold leading-snug"></div>
                 </div>
 
                 <!-- ==================== TAB 1: LỘ TRÌNH HSK 1-3, PHÒNG PINYIN & GIÁO TRÌNH TỰ SOẠN ==================== -->
@@ -659,6 +660,20 @@
                 <div class="text-gray-600">Chuyển khoản nội dung: <strong>PRO + Tên tài khoản</strong></div>
             </div>
             <button onclick="document.getElementById('vipModal').classList.add('hidden')" class="w-full btn-pastel-gold text-white py-2.5 rounded-2xl font-bold text-xs">Đóng</button>
+        </div>
+    </div>
+
+    <!-- Pop-up Nhập Gemini API Key cho giọng đọc AI Nam / Nữ chuẩn Bắc Kinh -->
+    <div id="apiKeyModal" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 border-2 border-purple-200 shadow-2xl space-y-3">
+            <h3 class="text-lg font-bold text-purple-600 text-center">🔑 Cài đặt Giọng AI Bản Xứ</h3>
+            <p class="text-xs text-gray-500 text-center leading-relaxed">Nhập <strong>Gemini API Key</strong> miễn phí (tạo tại <em>aistudio.google.com</em>) để mở khóa trọn vẹn 2 giọng <strong>Nữ</strong> & 2 giọng <strong>Nam</strong> Bắc Kinh chuẩn như người thật trên mọi trình duyệt.</p>
+            <input type="password" id="geminiApiKeyInput" placeholder="Dán mã AIza... vào đây" class="w-full p-3 bg-white border-2 border-purple-100 rounded-2xl text-xs focus:outline-none focus:border-purple-300">
+            <div class="flex gap-2">
+                <button onclick="saveGeminiApiKey()" class="flex-1 btn-pastel-lavender text-white py-2.5 rounded-2xl font-bold text-xs">Lưu & Bật AI</button>
+                <button onclick="clearGeminiApiKey()" class="px-3 bg-rose-50 hover:bg-rose-100 text-rose-500 py-2.5 rounded-2xl font-bold text-xs">Xóa Key</button>
+                <button onclick="closeApiKeyModal()" class="px-3 bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-2xl font-bold text-xs">Đóng</button>
+            </div>
         </div>
     </div>
 
@@ -1187,24 +1202,29 @@
             'kiem_tra': '<span class="px-2.5 py-0.5 bg-rose-100 text-rose-600 rounded-full text-[11px] font-bold">📕 Kiểm tra</span>',
             'on_tap': '<span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-[11px] font-bold">📗 Ôn tập</span>'
         };
-
-        // ==================== HỆ THỐNG GIỌNG ĐỌC & KHẨU ÂM CHUẨN BẮC KINH ====================
+        // ==================== HỆ THỐNG GIỌNG ĐỌC & KHẨU ÂM CHUẨN BẮC KINH (PHÂN BIỆT NAM / NỮ) ====================
         const AI_VOICES = [
-            { id: 'Aoede', label: '👩 Nữ Bắc Kinh dịu dàng', pitch: 1.32, gender: 'female', style: 'Speak clearly in standard Beijing Mandarin (普通话) with a warm, gentle, bright female voice' },
-            { id: 'Kore', label: '👩 Nữ Giảng viên rõ thanh điệu', pitch: 1.05, gender: 'female', style: 'Speak clearly and crisply in standard Mandarin (普通话) like a Chinese language teacher, emphasizing accurate tones' },
-            { id: 'Charon', label: '👨 Nam Bắc Kinh trầm ấm', pitch: 0.62, gender: 'male', style: 'Speak clearly in standard Beijing Mandarin (普通话) with a deep, calm, articulate male voice' },
-            { id: 'Puck', label: '👨 Nam Trẻ trung năng động', pitch: 0.82, gender: 'male', style: 'Speak naturally in standard Mandarin (普通话) with a lively, clear young male voice' }
+            { id: 'Aoede', label: '👩 Nữ Bắc Kinh dịu dàng', pitch: 1.12, gender: 'female', style: 'Speak clearly in standard Beijing Mandarin (普通话) with a warm, gentle, bright female voice' },
+            { id: 'Kore', label: '👩 Nữ Giảng viên rõ thanh điệu', pitch: 1.0, gender: 'female', style: 'Speak clearly and crisply in standard Mandarin (普通话) like a Chinese language teacher, emphasizing accurate tones' },
+            { id: 'Charon', label: '👨 Nam Bắc Kinh trầm ấm', pitch: 0.65, gender: 'male', style: 'Speak clearly in standard Beijing Mandarin (普通话) with a deep, calm, mature male voice' },
+            { id: 'Fenrir', label: '👨 Nam Trầm mạnh mẽ', pitch: 0.55, gender: 'male', style: 'Speak clearly in standard Mandarin (普通话) with a strong, resonant, low-pitched adult male voice' }
         ];
 
-        let userGeminiApiKey = '';
-        try { userGeminiApiKey = localStorage.getItem('td_gemini_tts_key') || ''; } catch (e) {}
+        const MALE_VOICE_REGEX = /Yunxi|Yunjian|Yunyang|Yunfeng|Yunhao|Yunze|Yunjie|Kangkang|Zhiyu|Li-mu|Yu-shu|\bMale\b|男/i;
+        const FEMALE_VOICE_REGEX = /Xiaoxiao|Xiaoyi|Xiaochen|Xiaohan|Xiaomeng|Xiaomo|Xiaoqiu|Xiaorui|Xiaoshuang|Xiaoxuan|Xiaoyan|Xiaoyou|Huihui|Yaoyao|Tingting|Ting-Ting|Mei-Jia|\bFemale\b|女|Google 普通话/i;
 
-        let voicePrefs = { engine: userGeminiApiKey ? 'ai' : 'browser', voice: userGeminiApiKey ? 'Aoede' : 'profile:Aoede', rate: 1.0 };
+        let savedGeminiKey = '';
+        try { savedGeminiKey = localStorage.getItem('td_gemini_api_key') || ''; } catch (e) {}
+
+        let voicePrefs = { engine: savedGeminiKey ? 'ai' : 'browser', voice: savedGeminiKey ? 'Aoede' : 'profile:Aoede', rate: 1.0 };
         try {
             const savedPrefs = JSON.parse(localStorage.getItem('td_voice_prefs') || 'null');
-            if (savedPrefs && savedPrefs.engine) voicePrefs = savedPrefs;
-            if (voicePrefs.engine === 'ai' && !userGeminiApiKey) {
-                voicePrefs.engine = 'browser';
+            if (savedPrefs && savedPrefs.engine) {
+                voicePrefs = savedPrefs;
+                if (voicePrefs.engine === 'ai' && !savedGeminiKey) {
+                    voicePrefs.engine = 'browser';
+                    voicePrefs.voice = 'profile:Aoede';
+                }
             }
         } catch (e) {}
 
@@ -1212,60 +1232,63 @@
         let currentAudioElement = null;
         let dialoguePlayToken = 0;
 
-        function openAiKeyModal() {
+        function classifyBrowserVoiceGender(voiceName) {
+            if (MALE_VOICE_REGEX.test(voiceName)) return 'male';
+            if (FEMALE_VOICE_REGEX.test(voiceName)) return 'female';
+            return 'unknown';
+        }
+
+        function updateKeyButtonUI() {
+            const btn = document.getElementById('btnApiKey');
+            if (!btn) return;
+            if (savedGeminiKey) {
+                btn.innerText = '✅ Key AI';
+                btn.className = 'px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold transition';
+            } else {
+                btn.innerText = '🔑 Key AI';
+                btn.className = 'px-2.5 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200 text-xs font-bold transition';
+            }
+        }
+
+        function setVoiceInfoLine(html, isWarn = false) {
+            const el = document.getElementById('voiceInfoLine');
+            if (!el) return;
+            el.className = `text-[11px] font-semibold leading-snug ${isWarn ? 'text-amber-600' : 'text-gray-500'}`;
+            el.innerHTML = html;
+        }
+
+        function openApiKeyModal() {
             const inp = document.getElementById('geminiApiKeyInput');
-            if (inp) inp.value = userGeminiApiKey;
-            document.getElementById('aiKeyModal').classList.remove('hidden');
+            if (inp) inp.value = savedGeminiKey;
+            document.getElementById('apiKeyModal').classList.remove('hidden');
+        }
+
+        function closeApiKeyModal() {
+            document.getElementById('apiKeyModal').classList.add('hidden');
         }
 
         function saveGeminiApiKey() {
-            const key = (document.getElementById('geminiApiKeyInput').value || '').trim();
-            if (!key) return showNotice("Vui lòng dán mã Gemini API Key hợp lệ!", "⚠️");
-            userGeminiApiKey = key;
-            try { localStorage.setItem('td_gemini_tts_key', key); } catch (e) {}
-            document.getElementById('aiKeyModal').classList.add('hidden');
+            const val = (document.getElementById('geminiApiKeyInput').value || '').trim();
+            if (!val) return showNotice("Vui lòng dán mã Gemini API Key!", "⚠️");
+            savedGeminiKey = val;
+            try { localStorage.setItem('td_gemini_api_key', savedGeminiKey); } catch (e) {}
             voicePrefs.engine = 'ai';
-            voicePrefs.voice = 'Aoede';
-            initVoiceControls();
+            if (!AI_VOICES.some(v => v.id === voicePrefs.voice)) voicePrefs.voice = 'Aoede';
             saveVoicePrefs();
-            showNotice("Đã lưu Key! Bấm 🔊 Thử để nghe 4 giọng AI Bắc Kinh nhé!", "🎉");
+            initVoiceControls();
+            closeApiKeyModal();
+            showNotice("Đã lưu Key AI! Giờ bạn có thể chọn đủ 2 giọng Nữ & 2 giọng Nam Bắc Kinh chuẩn.", "🎉");
         }
 
         function clearGeminiApiKey() {
-            userGeminiApiKey = '';
-            try { localStorage.removeItem('td_gemini_tts_key'); } catch (e) {}
-            document.getElementById('aiKeyModal').classList.add('hidden');
+            savedGeminiKey = '';
+            try { localStorage.removeItem('td_gemini_api_key'); } catch (e) {}
             voicePrefs.engine = 'browser';
-            initVoiceControls();
+            voicePrefs.voice = 'profile:Aoede';
             saveVoicePrefs();
-            showNotice("Đã xóa Key AI và chuyển về Giọng Hệ Thống.", "ℹ️");
-        }
-
-        function updateVoiceInfoHint(extraMsg = '') {
-            const hint = document.getElementById('voiceInfoHint');
-            const keyBtn = document.getElementById('btnAiKey');
-            if (keyBtn) {
-                keyBtn.innerText = userGeminiApiKey ? '✅ Key AI' : '🔑 Key AI';
-                keyBtn.className = userGeminiApiKey
-                    ? 'px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold transition'
-                    : 'px-2.5 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200 text-xs font-bold transition';
-            }
-            if (!hint) return;
-            if (extraMsg) {
-                hint.innerHTML = `<span class="text-rose-500 font-semibold">${extraMsg}</span>`;
-                return;
-            }
-            if (voicePrefs.engine === 'ai') {
-                hint.innerHTML = userGeminiApiKey
-                    ? `<span class="text-emerald-600 font-semibold">✨ Đang dùng giọng AI Bản Xứ (4 giọng Nam/Nữ thật)</span>`
-                    : `<span class="text-amber-600 font-semibold">⚠️ Chưa có Key AI — bấm "🔑 Key AI" để bật 4 giọng bản xứ, hoặc dùng Microsoft Edge để có nhiều giọng miễn phí.</span>`;
-            } else {
-                const voices = getBestBrowserZhVoices();
-                const hasRealMulti = voices.length > 1;
-                hint.innerHTML = hasRealMulti
-                    ? `<span>💻 Phát hiện <strong>${voices.length} giọng tiếng Trung</strong> trên máy — hãy chọn ở ô trên để đổi giọng!</span>`
-                    : `<span>💻 Trình duyệt này chỉ có 1 giọng cố định. Mở bằng <strong>Microsoft Edge</strong> (nhiều giọng Nam/Nữ miễn phí) hoặc bấm <strong>🔑 Key AI</strong>.</span>`;
-            }
+            initVoiceControls();
+            closeApiKeyModal();
+            showNotice("Đã xóa Key AI và chuyển về chế độ Hệ Thống.", "✨");
         }
 
         function initVoiceControls() {
@@ -1273,26 +1296,29 @@
             const rateSel = document.getElementById('voiceRateSelect');
             if (engSel) engSel.value = voicePrefs.engine;
             if (rateSel) rateSel.value = String(voicePrefs.rate || '1.0');
+            updateKeyButtonUI();
             populateVoiceChoices();
-            updateVoiceInfoHint();
+            refreshVoiceStatusPreview();
         }
 
         function onVoiceEngineChange() {
             stopAllAudio();
-            const chosen = document.getElementById('voiceEngineSelect').value;
-            if (chosen === 'ai' && !userGeminiApiKey) {
-                openAiKeyModal();
+            const picked = document.getElementById('voiceEngineSelect').value;
+            if (picked === 'ai' && !savedGeminiKey) {
+                document.getElementById('voiceEngineSelect').value = 'browser';
+                openApiKeyModal();
+                return;
             }
-            voicePrefs.engine = chosen;
+            voicePrefs.engine = picked;
             populateVoiceChoices();
             saveVoicePrefs();
-            updateVoiceInfoHint();
+            refreshVoiceStatusPreview();
         }
 
         function onVoiceChoiceChange() {
             stopAllAudio();
             saveVoicePrefs();
-            updateVoiceInfoHint();
+            refreshVoiceStatusPreview();
         }
 
         function getBestBrowserZhVoices() {
@@ -1303,9 +1329,9 @@
             return [...zhCn, ...zhOther].sort((a, b) => {
                 const score = (v) => {
                     const n = v.name || '';
-                    if (/Xiaoxiao|Yunxi|Xiaoyi|Yunjian|Yunyang/i.test(n)) return 100;
-                    if (/Huihui|Kangkang|Yaoyao|Tingting|Ting-Ting/i.test(n)) return 90;
-                    if (/Natural|Online|Neural/i.test(n)) return 85;
+                    if (/Yunxi|Yunjian|Yunyang|Xiaoxiao|Xiaoyi/i.test(n)) return 100;
+                    if (/Kangkang|Huihui|Yaoyao|Tingting|Ting-Ting/i.test(n)) return 85;
+                    if (/Natural|Online|Neural/i.test(n)) return 80;
                     if (/Google 普通话|Google.*CN/i.test(n)) return 70;
                     if (/zh[-_]CN/i.test(v.lang)) return 50;
                     return 10;
@@ -1314,71 +1340,76 @@
             });
         }
 
-        function pickBrowserVoiceByGender(voices, gender) {
-            if (!voices || !voices.length) return null;
-            const maleRegex = /Yunxi|Yunjian|Yunyang|Kangkang|Zhiyu|Male|男|Danny|Sinji|Yunjie/i;
-            const femaleRegex = /Xiaoxiao|Xiaoyi|Huihui|Yaoyao|Tingting|Ting-Ting|Female|女|Mei-Jia/i;
-            const localVoices = voices.filter(v => v.localService && !/Google/i.test(v.name));
+        function resolveBrowserVoice(rawChoice) {
+            const voices = getBestBrowserZhVoices();
+            const maleVoices = voices.filter(v => classifyBrowserVoiceGender(v.name) === 'male');
+            const femaleVoices = voices.filter(v => classifyBrowserVoiceGender(v.name) === 'female');
 
-            if (gender === 'male') {
-                return voices.find(v => maleRegex.test(v.name)) || localVoices[0] || voices[voices.length - 1] || voices[0];
+            if (rawChoice.startsWith('sys:')) {
+                const sysName = rawChoice.slice(4);
+                const exact = voices.find(v => v.name === sysName) || voices[0] || null;
+                return { voice: exact, pitch: 1.0, missingMale: false, gender: exact ? classifyBrowserVoiceGender(exact.name) : 'unknown' };
             }
-            return voices.find(v => femaleRegex.test(v.name)) || localVoices[0] || voices[0];
-        }
 
-        function onVoiceEngineChange() {
-            stopAllAudio();
-            voicePrefs.engine = document.getElementById('voiceEngineSelect').value;
-            populateVoiceChoices();
-            saveVoicePrefs();
-        }
+            const profId = rawChoice.startsWith('profile:') ? rawChoice.slice(8) : rawChoice;
+            const profile = AI_VOICES.find(v => v.id === profId) || AI_VOICES[0];
 
-        function onVoiceChoiceChange() {
-            stopAllAudio();
-            saveVoicePrefs();
-        }
-
-        function getBestBrowserZhVoices() {
-            if (!('speechSynthesis' in window)) return [];
-            const all = window.speechSynthesis.getVoices() || [];
-            const zhCn = all.filter(v => /zh[-_]CN|cmn[-_]Hans/i.test(v.lang));
-            const zhOther = all.filter(v => /^zh/i.test(v.lang) && !/zh[-_]HK|yue/i.test(v.lang) && !zhCn.includes(v));
-            return [...zhCn, ...zhOther].sort((a, b) => {
-                const score = (v) => {
-                    const n = v.name || '';
-                    if (/Xiaoxiao|Yunxi|Xiaoyi|Yunjian/i.test(n)) return 100;
-                    if (/Google 普通话|Google.*CN|Tingting|Ting-Ting/i.test(n)) return 90;
-                    if (/Natural|Online|Neural/i.test(n)) return 80;
-                    if (/zh[-_]CN/i.test(v.lang)) return 50;
-                    return 10;
-                };
-                return score(b) - score(a);
-            });
-        }
-
-        function pickBrowserVoiceByGender(voices, gender) {
-            if (!voices || !voices.length) return null;
-            const maleRegex = /Yunxi|Yunjian|Yunyang|Kangkang|Zhiyu|Male|男|Danny|Sinji/i;
-            const femaleRegex = /Xiaoxiao|Xiaoyi|Huihui|Yaoyao|Tingting|Ting-Ting|Female|女|Mei-Jia/i;
-            if (gender === 'male') {
-                return voices.find(v => maleRegex.test(v.name)) || voices[voices.length - 1] || voices[0];
+            if (profile.gender === 'male') {
+                if (maleVoices.length > 0) {
+                    const picked = (profile.id === 'Fenrir' && maleVoices.length > 1) ? maleVoices[1] : maleVoices[0];
+                    return { voice: picked, pitch: 1.0, missingMale: false, gender: 'male' };
+                }
+                // Không có giọng Nam thật trên trình duyệt: tránh Google 普通话 (khóa cứng pitch) nếu có giọng local hỗ trợ chỉnh trầm
+                const localFallback = voices.find(v => v.localService && !/Google/i.test(v.name)) || voices[0] || null;
+                return { voice: localFallback, pitch: profile.pitch, missingMale: true, gender: 'male' };
+            } else {
+                const picked = (profile.id === 'Kore' && femaleVoices.length > 1) ? femaleVoices[1] : (femaleVoices[0] || voices[0] || null);
+                return { voice: picked, pitch: profile.id === 'Aoede' ? 1.08 : 1.0, missingMale: false, gender: 'female' };
             }
-            return voices.find(v => femaleRegex.test(v.name)) || voices[0];
+        }
+
+        function refreshVoiceStatusPreview() {
+            if (voicePrefs.engine === 'ai') {
+                const v = AI_VOICES.find(x => x.id === voicePrefs.voice) || AI_VOICES[0];
+                setVoiceInfoLine(`✅ Chế độ AI Bắc Kinh: <strong>${v.label}</strong> (${v.gender === 'male' ? 'Giọng Nam chuẩn' : 'Giọng Nữ chuẩn'}).`);
+                return;
+            }
+            const res = resolveBrowserVoice(voicePrefs.voice || '');
+            if (!res.voice) {
+                setVoiceInfoLine('⚠️ Trình duyệt chưa tải được gói giọng tiếng Trung.', true);
+                return;
+            }
+            if (res.missingMale) {
+                setVoiceInfoLine(`⚠️ Trình duyệt hiện tại chỉ có giọng Nữ (${res.voice.name}), không có giọng Nam tiếng Trung. Hãy mở web bằng <strong>Microsoft Edge</strong> hoặc bấm <strong>🔑 Key AI</strong> để nghe giọng Nam thật!`, true);
+            } else {
+                const gLabel = res.gender === 'male' ? '👨 Giọng Nam thật' : (res.gender === 'female' ? '👩 Giọng Nữ thật' : '🎙️ Giọng tiếng Trung');
+                setVoiceInfoLine(`✅ Đang dùng (${gLabel}): <strong>${res.voice.name}</strong>`);
+            }
         }
 
         function populateVoiceChoices() {
             const sel = document.getElementById('voiceChoiceSelect');
             if (!sel) return;
             if (voicePrefs.engine === 'ai') {
-                sel.innerHTML = AI_VOICES.map(v => `<option value="${v.id}">${v.label}</option>`).join('');
+                const femaleAi = AI_VOICES.filter(v => v.gender === 'female');
+                const maleAi = AI_VOICES.filter(v => v.gender === 'male');
+                sel.innerHTML =
+                    `<optgroup label="👩 Giọng Nữ Bản Xứ">${femaleAi.map(v => `<option value="${v.id}">${v.label}</option>`).join('')}</optgroup>` +
+                    `<optgroup label="👨 Giọng Nam Bản Xứ">${maleAi.map(v => `<option value="${v.id}">${v.label}</option>`).join('')}</optgroup>`;
                 if (AI_VOICES.some(v => v.id === voicePrefs.voice)) sel.value = voicePrefs.voice;
                 else { sel.value = AI_VOICES[0].id; voicePrefs.voice = AI_VOICES[0].id; }
             } else {
                 const voices = getBestBrowserZhVoices();
-                const profileOpts = AI_VOICES.map(v => `<option value="profile:${v.id}">${v.label}</option>`).join('');
-                const sysOpts = voices.map(v => `<option value="sys:${escAttr(v.name)}">💻 ${v.name}</option>`).join('');
-                sel.innerHTML = `<optgroup label="Sắc thái giọng (Đổi cao độ ngay)">${profileOpts}</optgroup>` +
-                    (sysOpts ? `<optgroup label="Giọng cài trên máy">${sysOpts}</optgroup>` : '');
+                const maleSys = voices.filter(v => classifyBrowserVoiceGender(v.name) === 'male');
+                const femaleSys = voices.filter(v => classifyBrowserVoiceGender(v.name) === 'female');
+                const otherSys = voices.filter(v => classifyBrowserVoiceGender(v.name) === 'unknown');
+
+                let html = `<optgroup label="✨ Chọn nhanh Nam / Nữ">${AI_VOICES.map(v => `<option value="profile:${v.id}">${v.label}</option>`).join('')}</optgroup>`;
+                if (maleSys.length) html += `<optgroup label="👨 Giọng Nam trên máy (${maleSys.length})">${maleSys.map(v => `<option value="sys:${escAttr(v.name)}">👨 ${v.name}</option>`).join('')}</optgroup>`;
+                if (femaleSys.length) html += `<optgroup label="👩 Giọng Nữ trên máy (${femaleSys.length})">${femaleSys.map(v => `<option value="sys:${escAttr(v.name)}">👩 ${v.name}</option>`).join('')}</optgroup>`;
+                if (otherSys.length) html += `<optgroup label="💻 Giọng tiếng Trung khác">${otherSys.map(v => `<option value="sys:${escAttr(v.name)}">💻 ${v.name}</option>`).join('')}</optgroup>`;
+
+                sel.innerHTML = html;
                 const allValues = [...sel.options].map(o => o.value);
                 if (allValues.includes(voicePrefs.voice)) {
                     sel.value = voicePrefs.voice;
@@ -1440,12 +1471,12 @@
         }
 
         async function fetchGeminiTtsUrl(text, voiceId) {
-            if (!userGeminiApiKey) throw new Error('NO_API_KEY');
+            if (!savedGeminiKey) throw new Error('Missing Gemini API Key');
             const cacheKey = `${voiceId}::${text}`;
             if (aiAudioCache.has(cacheKey)) return aiAudioCache.get(cacheKey);
 
             const voiceMeta = AI_VOICES.find(v => v.id === voiceId) || AI_VOICES[0];
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${encodeURIComponent(userGeminiApiKey)}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${encodeURIComponent(savedGeminiKey)}`;
             const payload = {
                 contents: [{ parts: [{ text: `${voiceMeta.style}: ${text}` }] }],
                 generationConfig: {
@@ -1492,26 +1523,11 @@
                 utter.lang = 'zh-CN';
                 utter.rate = rate;
 
-                const voices = getBestBrowserZhVoices();
                 const rawChoice = fallbackProfileId ? `profile:${fallbackProfileId}` : (voicePrefs.voice || '');
-                let chosenVoice = null;
-                let targetPitch = 1.0;
+                const res = resolveBrowserVoice(rawChoice);
+                if (res.voice) utter.voice = res.voice;
+                utter.pitch = res.pitch;
 
-                if (rawChoice.startsWith('sys:')) {
-                    const sysName = rawChoice.slice(4);
-                    chosenVoice = voices.find(v => v.name === sysName) || voices[0];
-                } else {
-                    const profId = rawChoice.startsWith('profile:') ? rawChoice.slice(8) : rawChoice;
-                    const profile = AI_VOICES.find(v => v.id === profId) || AI_VOICES[0];
-                    targetPitch = profile.pitch;
-                    chosenVoice = pickBrowserVoiceByGender(voices, profile.gender);
-                }
-
-                if (chosenVoice) utter.voice = chosenVoice;
-                utter.pitch = targetPitch;
-                if (chosenVoice) {
-                    updateVoiceInfoHint(`🔊 Đang đọc bằng: ${chosenVoice.name}${/Google/i.test(chosenVoice.name) ? ' (giọng Google không đổi cao độ được)' : ''}`);
-                }
                 utter.onend = () => resolve();
                 utter.onerror = () => resolve();
                 setTimeout(() => window.speechSynthesis.speak(utter), 30);
@@ -1527,7 +1543,7 @@
             }
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-            if (voicePrefs.engine === 'ai') {
+            if (voicePrefs.engine === 'ai' && savedGeminiKey) {
                 const badge = document.getElementById('audioStatusBadge');
                 const voiceId = AI_VOICES.some(v => v.id === voicePrefs.voice) ? voicePrefs.voice : AI_VOICES[0].id;
                 if (badge && !aiAudioCache.has(`${voiceId}::${text}`)) badge.classList.remove('hidden');
@@ -1544,9 +1560,7 @@
                     });
                 } catch (e) {
                     if (badge) badge.classList.add('hidden');
-                    if (e && e.message === 'NO_API_KEY') {
-                        updateVoiceInfoHint('⚠️ Chưa nhập Key AI nên đang đọc tạm bằng giọng trình duyệt. Bấm "🔑 Key AI" để bật 4 giọng bản xứ.');
-                    }
+                    setVoiceInfoLine('⚠️ Key AI lỗi hoặc hết hạn mức, đang tạm dùng giọng Hệ Thống.', true);
                     return await speakWithBrowserTTS(text, effectiveRate, voiceId);
                 }
             } else {
@@ -1555,6 +1569,7 @@
         }
 
         function testCurrentVoice() {
+            refreshVoiceStatusPreview();
             speakChinese("你好！欢迎来到汉语课堂，我们一起学习标准普通话吧！");
         }
 
@@ -1562,7 +1577,7 @@
             window.speechSynthesis.onvoiceschanged = () => {
                 if (voicePrefs.engine === 'browser') {
                     populateVoiceChoices();
-                    updateVoiceInfoHint();
+                    refreshVoiceStatusPreview();
                 }
             };
         }
