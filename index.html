@@ -110,7 +110,7 @@
 
     <!-- ==================== THANH ĐIỀU HƯỚNG TRÊN CÙNG ==================== -->
     <nav class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-pink-100 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center gap-2">
+        <div class="max-w-[1380px] mx-auto px-4 py-3 flex justify-between items-center gap-2">
             <div class="flex items-center gap-2.5 min-w-0">
                 <span class="w-10 h-10 shrink-0 rounded-2xl bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center text-white text-xl shadow-sm">🌸</span>
                 <div class="truncate">
@@ -134,7 +134,7 @@
         </div>
     </nav>
 
-    <div class="max-w-5xl mx-auto px-4 mt-5">
+    <div class="max-w-[1380px] mx-auto px-4 mt-5">
 
         <!-- ==================== KHU VỰC ĐĂNG NHẬP / ĐĂNG KÝ ==================== -->
         <div id="authSection" class="pastel-card p-7 md:p-9 rounded-3xl max-w-md mx-auto mt-6 md:mt-10">
@@ -174,7 +174,58 @@
         </div>
 
         <!-- ==================== ỨNG DỤNG CHÍNH (WEB + APP) ==================== -->
-        <div id="mainApp" class="hidden space-y-6">
+        <div id="mainApp" class="hidden">
+            <div class="grid grid-cols-1 xl:grid-cols-[265px_minmax(0,1fr)_285px] gap-6 items-start">
+
+                <!-- ==================== CỘT TRÁI: TIỆN ÍCH HỌC NHANH ==================== -->
+                <aside class="order-2 xl:order-1 space-y-5 xl:sticky xl:top-20">
+                    <!-- 1. Chuỗi ngày học & Mục tiêu XP -->
+                    <div class="pastel-card p-5 rounded-3xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-gray-700">🔥 Chuỗi học tập</span>
+                            <span id="streakBadge" class="px-2.5 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-extrabold">1 ngày</span>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-gray-500 mb-1.5">
+                                <span>Mục tiêu hôm nay</span>
+                                <span id="dailyXpText" class="text-rose-500">0 / 100 XP</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-pink-100 rounded-full overflow-hidden">
+                                <div id="dailyXpBar" class="h-full bg-gradient-to-r from-amber-400 to-rose-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">Thuộc 1 từ (+15 XP) • Làm 1 bài tập (+25 XP + điểm thưởng).</p>
+                    </div>
+
+                    <!-- 2. Từ điển tra nhanh Msutong -->
+                    <div class="pastel-card p-5 rounded-3xl space-y-3">
+                        <h3 class="text-sm font-bold text-gray-700">🔍 Tra nhanh từ Msutong</h3>
+                        <input type="text" id="quickDictInput" oninput="searchQuickDict()" placeholder="Gõ Hán tự, Pinyin, nghĩa..." class="w-full px-3.5 py-2 bg-white border-2 border-pink-100 rounded-2xl text-xs focus:outline-none focus:border-pink-300 transition">
+                        <div id="quickDictResults" class="space-y-2 max-h-56 overflow-y-auto no-scrollbar text-xs">
+                            <p class="text-gray-400 text-center py-2">Nhập từ khóa để tra nhanh (VD: 咖啡, xièxie, rẻ...)</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Từ vựng mỗi ngày -->
+                    <div class="pastel-card p-5 rounded-3xl bg-gradient-to-br from-purple-50/80 to-white border-purple-100 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-purple-600">✨ Từ vựng mỗi ngày</span>
+                            <button onclick="renderWordOfTheDay(true)" class="text-[11px] font-bold text-purple-400 hover:text-purple-600 transition">Đổi từ ↻</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div id="wotdHanzi" class="text-2xl font-bold text-gray-800 zh-text">你好</div>
+                                <div id="wotdPinyin" class="text-xs font-bold text-purple-500">nǐ hǎo</div>
+                            </div>
+                            <button onclick="speakChinese(currentWotd.zh, 0.9)" class="w-9 h-9 rounded-full bg-white border border-purple-200 text-rose-500 shadow-sm hover:bg-pink-50 flex items-center justify-center transition">🔊</button>
+                        </div>
+                        <p id="wotdMeaning" class="text-xs font-semibold text-gray-600">Xin chào</p>
+                        <p id="wotdExample" class="text-[11px] text-gray-400 zh-text bg-white/80 p-2 rounded-xl border border-purple-50"></p>
+                    </div>
+                </aside>
+
+                <!-- ==================== CỘT GIỮA: NỘI DUNG HỌC CHÍNH ==================== -->
+                <main class="order-1 xl:order-2 min-w-0 space-y-6">
 
             <!-- Menu chuyển Tab trên Máy tính (Desktop) -->
             <div class="hidden md:flex pastel-card p-1.5 rounded-2xl gap-1.5">
@@ -506,6 +557,46 @@
                 </div>
             </div>
 
+                </main>
+
+                <!-- ==================== CỘT PHẢI: BẢNG XẾP HẠNG & TẬP TRUNG ==================== -->
+                <aside class="order-3 space-y-5 xl:sticky xl:top-20">
+                    <!-- 1. Bảng Xếp Hạng Học Viên -->
+                    <div class="pastel-card p-5 rounded-3xl space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-sm font-bold text-rose-500 flex items-center gap-1.5">🏆 Bảng Xếp Hạng</h3>
+                                <p class="text-[11px] text-gray-400">Top học viên chăm chỉ tuần này</p>
+                            </div>
+                            <button onclick="loadLeaderboard()" title="Cập nhật bảng xếp hạng" class="w-8 h-8 rounded-full bg-pink-50 hover:bg-pink-100 text-rose-500 text-xs flex items-center justify-center transition">🔄</button>
+                        </div>
+
+                        <div id="leaderboardList" class="space-y-2"></div>
+
+                        <div id="myRankSummary" class="p-3 rounded-2xl bg-gradient-to-r from-rose-50 to-purple-50 border border-pink-200 text-xs flex items-center justify-between">
+                            <span class="font-bold text-gray-600">Hạng của bạn: <strong id="myRankNumber" class="text-rose-500">#--</strong></span>
+                            <span id="myTotalXpBadge" class="font-extrabold text-purple-600">0 XP</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Đồng hồ tập trung Pomodoro -->
+                    <div class="pastel-card p-5 rounded-3xl text-center space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-gray-700">🍅 Học tập trung</span>
+                            <div class="flex gap-1">
+                                <button onclick="setPomodoroMode(25)" id="pomoBtn25" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-rose-100 text-rose-600">25p</button>
+                                <button onclick="setPomodoroMode(5)" id="pomoBtn5" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-gray-100 text-gray-500">Nghỉ 5p</button>
+                            </div>
+                        </div>
+                        <div id="pomodoroDisplay" class="text-3xl font-mono font-extrabold text-rose-500 tracking-wider py-1">25:00</div>
+                        <div class="flex gap-2">
+                            <button onclick="togglePomodoro()" id="pomoStartBtn" class="flex-1 btn-pastel-mint text-white py-2 rounded-xl text-xs font-bold transition">▶ Bắt đầu</button>
+                            <button onclick="resetPomodoro()" class="px-3.5 bg-gray-100 hover:bg-gray-200 text-gray-600 py-2 rounded-xl text-xs font-bold transition">↺</button>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
         </div>
 
         <!-- ==================== CHÂN TRANG BẢN QUYỀN CÁ NHÂN ==================== -->
@@ -1063,28 +1154,31 @@
             renderBuiltInQuizzes();
             initHanziPresets();
             changeFlashcardLevel();
+            initSidebars();
             switchTab('lessons');
             if (!isGuestMode) {
                 loadLessons();
                 loadQuizzes();
-            } else {
-                document.getElementById('lessonsList').innerHTML = `<div class="text-center py-6 text-gray-400 text-sm">🔐 Đăng nhập tài khoản để xem bài giảng riêng của giáo viên.</div>`;
-                document.getElementById('quizzesList').innerHTML = `<div class="col-span-full text-center py-6 text-gray-400 text-sm">🔐 Đăng nhập tài khoản để làm đề kiểm tra riêng của lớp.</div>`;
             }
             loadProgress();
         }
 
         async function checkUser() {
+            if (isGuestMode) return;
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
                 if (session) {
-                    isGuestMode = false;
                     currentUser = session.user;
                     const { data: profile } = await supabaseClient.from('profiles').select('*').eq('id', currentUser.id).single();
+
                     if (profile) {
-                        currentUserRole = profile.role;
+                        currentUserRole = profile.role || 'student';
                         document.getElementById('userNameDisplay').innerText = profile.full_name || currentUser.email;
-                        document.getElementById('roleBadge').innerText = profile.role === 'teacher' ? '👩‍🏫 Giáo viên' : '🎓 Học viên';
+                        document.getElementById('roleBadge').innerText = currentUserRole === 'teacher' ? '👩‍🏫 Giáo viên' : '🎓 Học viên';
+                    } else {
+                        currentUserRole = 'student';
+                        document.getElementById('userNameDisplay').innerText = currentUser.email;
+                        document.getElementById('roleBadge').innerText = '🎓 Học viên';
                     }
                     showMainAppUI();
                 } else {
@@ -1093,8 +1187,9 @@
                     document.getElementById('userInfo').classList.add('hidden');
                     document.getElementById('mobileBottomNav').classList.add('hidden');
                 }
-            } catch (err) {
-                console.error("Lỗi kiểm tra phiên:", err);
+            } catch (e) {
+                console.warn('Lỗi kiểm tra phiên đăng nhập:', e);
+                document.getElementById('authSection').classList.remove('hidden');
             }
         }
 
@@ -1110,21 +1205,18 @@
             if (!email || !email.includes('@')) return showMessage("Vui lòng nhập Email hợp lệ!");
             if (password.length < 6) return showMessage("Mật khẩu phải từ 6 ký tự trở lên!");
 
-            try {
-                showMessage("Đang kiểm tra tên tài khoản...", "#8B5CF6");
-                const { data: exists } = await supabaseClient.rpc('check_username_exists', { p_username: username });
-                if (exists) return showMessage("Tên tài khoản này đã có người dùng!", "#E11D48");
+            showMessage("Đang kiểm tra tên tài khoản...", "#8B5CF6");
+            const { data: exists } = await supabaseClient.rpc('check_username_exists', { p_username: username });
+            if (exists) return showMessage("Tên tài khoản này đã có người dùng, hãy chọn tên khác!", "#E11D48");
 
-                showMessage("Đang tạo tài khoản...", "#8B5CF6");
-                const { error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: fullName } } });
-                if (error) return showMessage("Lỗi đăng ký: " + error.message, "#E11D48");
+            showMessage("Đang tạo tài khoản...", "#8B5CF6");
+            const { error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: fullName } } });
+            if (error) return showMessage("Lỗi đăng ký: " + error.message, "#E11D48");
 
-                await supabaseClient.rpc('save_my_username', { p_username: username });
-                showMessage("Đăng ký thành công! Đang vào lớp...", "#10B981");
-                setTimeout(checkUser, 1000);
-            } catch (err) {
-                showMessage("Lỗi đăng ký: " + err.message, "#E11D48");
-            }
+            await supabaseClient.rpc('save_my_username', { p_username: username });
+            showMessage("Đăng ký thành công! Đang vào lớp...", "#10B981");
+            isGuestMode = false;
+            setTimeout(checkUser, 1000);
         }
 
         async function login() {
@@ -1132,19 +1224,20 @@
             const password = document.getElementById('password').value;
             if (!identifier || !password) return showMessage("Vui lòng nhập Tài khoản/Email và Mật khẩu!");
 
-            try {
-                showMessage("Đang đăng nhập...", "#8B5CF6");
-                let emailToLogin = identifier;
-                if (!identifier.includes('@')) {
-                    const { data: foundEmail, error: rpcErr } = await supabaseClient.rpc('get_email_by_username', { p_username: identifier });
-                    if (rpcErr || !foundEmail) return showMessage("Không tìm thấy tên tài khoản này!", "#E11D48");
-                    emailToLogin = foundEmail;
-                }
-                const { error } = await supabaseClient.auth.signInWithPassword({ email: emailToLogin, password });
-                if (error) showMessage("Sai tài khoản hoặc mật khẩu!", "#E11D48");
-                else checkUser();
-            } catch (err) {
-                showMessage("Lỗi kết nối khi đăng nhập!", "#E11D48");
+            showMessage("Đang đăng nhập...", "#8B5CF6");
+            let emailToLogin = identifier;
+
+            if (!identifier.includes('@')) {
+                const { data: foundEmail, error: rpcErr } = await supabaseClient.rpc('get_email_by_username', { p_username: identifier });
+                if (rpcErr || !foundEmail) return showMessage("Không tìm thấy tên tài khoản này!", "#E11D48");
+                emailToLogin = foundEmail;
+            }
+
+            const { error } = await supabaseClient.auth.signInWithPassword({ email: emailToLogin, password });
+            if (error) showMessage("Sai tài khoản hoặc mật khẩu!", "#E11D48");
+            else {
+                isGuestMode = false;
+                checkUser();
             }
         }
 
@@ -1154,7 +1247,10 @@
             isGuestMode = false;
             currentUser = null;
             showMessage("");
-            checkUser();
+            document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('userInfo').classList.add('hidden');
+            document.getElementById('mobileBottomNav').classList.add('hidden');
         }
 
         function switchAuthTab(mode) {
@@ -1170,6 +1266,7 @@
             document.getElementById('authTab-login').className = isRegister
                 ? 'flex-1 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-gray-600 transition'
                 : 'flex-1 py-2 rounded-xl text-sm font-bold bg-white text-rose-500 shadow-sm transition';
+
             document.getElementById('authTab-register').className = isRegister
                 ? 'flex-1 py-2 rounded-xl text-sm font-bold bg-white text-emerald-600 shadow-sm transition'
                 : 'flex-1 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-gray-600 transition';
@@ -1179,7 +1276,6 @@
 
         function showMessage(msg, color = "#E11D48") {
             const el = document.getElementById('authMessage');
-            if (!el) return;
             el.innerText = msg;
             el.style.color = color;
         }
@@ -1187,41 +1283,33 @@
         function switchTab(tabName) {
             const tabs = ['lessons', 'flashcards', 'writing', 'quizzes', 'progress'];
             tabs.forEach(t => {
-                const panel = document.getElementById(`tab-${t}`);
-                if (panel) panel.classList.add('hidden');
-
-                const deskBtn = document.getElementById(`tabBtn-${t}`);
-                if (deskBtn) deskBtn.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-sm text-gray-500 hover:bg-pink-50 transition';
-
-                const mobBtn = document.getElementById(`mobBtn-${t}`);
-                if (mobBtn) mobBtn.className = 'flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-gray-400 transition';
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tabBtn-${t}`);
+                if (btn) btn.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-sm text-gray-500 hover:bg-pink-50 transition';
+                const mob = document.getElementById(`mobBtn-${t}`);
+                if (mob) mob.className = 'flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-gray-400 transition';
             });
 
-            const activePanel = document.getElementById(`tab-${tabName}`);
-            if (activePanel) activePanel.classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tabBtn-${tabName}`);
+            if (activeBtn) activeBtn.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-sm btn-pastel-pink text-white transition';
+            const activeMob = document.getElementById(`mobBtn-${tabName}`);
+            if (activeMob) activeMob.className = 'flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-rose-500 bg-pink-50 transition';
 
-            const activeDeskBtn = document.getElementById(`tabBtn-${tabName}`);
-            if (activeDeskBtn) activeDeskBtn.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-sm btn-pastel-pink text-white transition';
-
-            const activeMobBtn = document.getElementById(`mobBtn-${tabName}`);
-            if (activeMobBtn) activeMobBtn.className = 'flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-rose-500 bg-pink-50 transition';
-
-            if (tabName === 'writing') {
-                setTimeout(() => renderHanziWriter(currentWritingChar), 50);
-            }
             if (tabName === 'progress') loadProgress();
             if (tabName === 'quizzes' && !isGuestMode) loadQuizzes();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (tabName === 'writing' && !hanziWriterInstance) loadHanziChar(currentWritingChar, 'hǎo', 'Tốt, khỏe (Bài 1 - Msutong 1)');
         }
 
-        // ==================== TAB 1: LỘ TRÌNH MSUTONG & LỚP HỌC ====================
+        // ==================== TAB 1: LỘ TRÌNH MSUTONG & BÀI GIẢNG LỚP HỌC ====================
         function selectCurriculumLevel(level) {
-            ['pinyin', 'msutong1', 'msutong2', 'msutong3', 'msutong4', 'classroom'].forEach(l => {
+            const levels = ['pinyin', 'msutong1', 'msutong2', 'msutong3', 'msutong4', 'classroom'];
+            levels.forEach(l => {
                 const btn = document.getElementById(`lvlBtn-${l}`);
                 if (!btn) return;
-                btn.className = (l === level)
+                btn.className = l === level
                     ? 'px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap btn-pastel-pink text-white transition'
-                    : 'px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap bg-white border border-pink-100 text-gray-500 hover:bg-pink-50 transition';
+                    : 'px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap bg-white border border-pink-100 text-gray-600 hover:bg-pink-50 transition';
             });
 
             const currDiv = document.getElementById('curriculumContainer');
@@ -1230,63 +1318,66 @@
             if (level === 'classroom') {
                 currDiv.classList.add('hidden');
                 classDiv.classList.remove('hidden');
+                if (!isGuestMode) loadLessons();
+                else document.getElementById('lessonsList').innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">🔐 Hãy đăng nhập tài khoản học viên để xem bài giảng riêng của lớp học.</div>`;
                 return;
             }
 
             classDiv.classList.add('hidden');
             currDiv.classList.remove('hidden');
-
             const lessons = CURRICULUM_DATA[level] || [];
-            currDiv.innerHTML = lessons.map((item, lessonIdx) => `
+
+            currDiv.innerHTML = lessons.map((lesson, lIdx) => `
                 <div class="pastel-card p-5 md:p-6 rounded-3xl space-y-4">
                     <div>
-                        <h3 class="text-lg font-bold text-rose-500">${item.title}</h3>
-                        <p class="text-xs text-gray-500 mt-0.5">${item.desc}</p>
+                        <h3 class="text-base md:text-lg font-bold text-rose-500 zh-text">${lesson.title}</h3>
+                        <p class="text-xs text-gray-500 mt-1">${lesson.desc}</p>
                     </div>
 
-                    <div class="p-3.5 rounded-2xl bg-purple-50/70 border border-purple-100 text-xs md:text-sm text-purple-800 leading-relaxed">
-                        <strong>💡 Điểm ngữ pháp:</strong> ${item.grammar}
+                    <div class="p-3.5 rounded-2xl bg-purple-50/70 border border-purple-100 text-xs text-purple-800 leading-relaxed">
+                        <strong>📌 Trọng tâm ngữ pháp:</strong> ${lesson.grammar}
                     </div>
 
                     <div>
-                        <p class="text-xs font-bold text-gray-500 mb-2.5">📚 Từ vựng trọng tâm (Bấm loa để nghe phát âm):</p>
+                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2.5">📚 Từ vựng trọng tâm (Bấm loa nghe & ✍️ tập viết)</h4>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            ${item.words.map(w => `
-                                <div class="flex items-center justify-between p-3 rounded-2xl bg-white border border-pink-100 hover:border-pink-300 transition">
-                                    <div>
-                                        <span class="text-lg font-bold text-gray-800 zh-text">${w.zh}</span>
-                                        <span class="text-xs font-bold text-purple-500 ml-1.5">${w.py}</span>
-                                        <div class="text-xs text-gray-500">${w.vi}</div>
+                            ${lesson.words.map(w => `
+                                <div class="p-3 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-2 hover:border-pink-300 transition">
+                                    <div class="min-w-0">
+                                        <div class="flex items-baseline gap-2 flex-wrap">
+                                            <span class="text-lg font-bold text-gray-800 zh-text">${w.zh}</span>
+                                            <span class="text-xs font-bold text-purple-500">${w.py}</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 truncate">${w.vi}</p>
                                     </div>
-                                    <div class="flex items-center gap-1.5">
-                                        <button onclick="speakChinese('${escAttr(w.zh)}', 0.95)" title="Đọc chuẩn" class="w-8 h-8 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-500 text-xs flex items-center justify-center transition">🔊</button>
-                                        <button onclick="speakChinese('${escAttr(w.zh)}', 0.65)" title="Đọc chậm" class="w-8 h-8 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-500 text-xs flex items-center justify-center transition">🐢</button>
-                                        <button onclick="jumpToWrite('${escAttr(w.zh.charAt(0))}', '${escAttr(w.py)}', '${escAttr(w.vi)}')" title="Tập viết chữ đầu" class="w-8 h-8 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-xs flex items-center justify-center transition">✍️</button>
+                                    <div class="flex items-center gap-1.5 shrink-0">
+                                        <button onclick="speakChinese('${escAttr(w.zh)}', 0.9)" title="Đọc chuẩn" class="w-8 h-8 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-500 text-xs flex items-center justify-center transition">🔊</button>
+                                        <button onclick="openWritingForWord('${escAttr(w.zh.charAt(0))}', '${escAttr(w.py)}', '${escAttr(w.vi)}')" title="Tập viết chữ này" class="w-8 h-8 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-xs flex items-center justify-center transition">✍️</button>
                                     </div>
                                 </div>
                             `).join('')}
                         </div>
                     </div>
 
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <p class="text-xs font-bold text-gray-500">💬 Hội thoại mẫu (Audio):</p>
-                            <button onclick="playFullDialogue('${level}', ${lessonIdx})" class="px-3 py-1 rounded-full bg-purple-100 hover:bg-purple-200 text-purple-700 text-[11px] font-bold transition">▶ Nghe cả đoạn</button>
-                        </div>
-                        <div class="space-y-2">
-                            ${item.dialogue.map(d => `
-                                <div class="flex items-start justify-between gap-2 p-3 rounded-2xl bg-pink-50/40 border border-pink-100">
-                                    <div>
-                                        <span class="text-xs font-bold text-rose-500">${d.speaker}:</span>
-                                        <span class="text-sm font-bold text-gray-800 zh-text ml-1">${d.zh}</span>
-                                        <div class="text-xs text-purple-500">${d.py}</div>
-                                        <div class="text-xs text-gray-500">${d.vi}</div>
+                    ${lesson.dialogue && lesson.dialogue.length ? `
+                        <div class="p-4 rounded-2xl bg-pink-50/50 border border-pink-100 space-y-2.5">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xs font-bold text-rose-500">💬 Hội thoại thực tế</h4>
+                                <button onclick="playFullDialogue('${level}', ${lIdx})" class="px-3 py-1 rounded-full bg-white border border-pink-200 text-rose-500 hover:bg-rose-50 text-[11px] font-bold transition">▶ Nghe cả đoạn</button>
+                            </div>
+                            ${lesson.dialogue.map(line => `
+                                <div class="flex items-start justify-between gap-2 bg-white/90 p-2.5 rounded-xl border border-pink-50">
+                                    <div class="text-xs">
+                                        <span class="font-bold text-purple-600">${line.speaker}:</span>
+                                        <span class="font-bold text-gray-800 zh-text ml-1">${line.zh}</span>
+                                        <div class="text-[11px] text-purple-400 mt-0.5">${line.py}</div>
+                                        <div class="text-[11px] text-gray-500">${line.vi}</div>
                                     </div>
-                                    <button onclick="speakChinese('${escAttr(d.zh)}', 0.9)" class="shrink-0 px-2.5 py-1 rounded-full bg-white border border-pink-200 text-rose-500 text-xs font-bold hover:bg-pink-50 transition">🔊 Nghe</button>
+                                    <button onclick="speakChinese('${escAttr(line.zh)}', 0.9)" class="shrink-0 w-7 h-7 rounded-full bg-pink-50 hover:bg-pink-100 text-rose-500 text-xs flex items-center justify-center">🔊</button>
                                 </div>
                             `).join('')}
                         </div>
-                    </div>
+                    ` : ''}
                 </div>
             `).join('');
         }
@@ -1294,39 +1385,63 @@
         function playFullDialogue(level, lessonIdx) {
             const lesson = (CURRICULUM_DATA[level] || [])[lessonIdx];
             if (!lesson || !lesson.dialogue) return;
-            const fullText = lesson.dialogue.map(d => d.zh).join('。 ');
+            const fullText = lesson.dialogue.map(d => d.zh).join(' ');
             speakChinese(fullText, 0.88);
         }
 
-        function jumpToWrite(char, py = '', vi = '') {
-            currentWritingChar = char;
-            document.getElementById('currentHanziChar').innerText = char;
-            document.getElementById('currentHanziPinyin').innerText = py || 'Chữ trong bài';
-            document.getElementById('currentHanziMeaning').innerText = vi ? `Nghĩa: ${vi}` : 'Tập viết theo thứ tự nét chuẩn.';
+        function openWritingForWord(char, py, vi) {
             switchTab('writing');
+            loadHanziChar(char, py, vi);
+        }
+
+        async function addLesson() {
+            const title = document.getElementById('lessonTitle').value.trim();
+            const content = document.getElementById('lessonContent').value.trim();
+            const video_url = document.getElementById('lessonVideo').value.trim();
+            if (!title) return showNotice("Vui lòng nhập tiêu đề bài học!", "⚠️");
+
+            const { error } = await supabaseClient.from('lessons').insert([{ title, content, video_url }]);
+            if (error) showNotice("Lỗi: " + error.message, "❌");
+            else {
+                document.getElementById('lessonTitle').value = '';
+                document.getElementById('lessonContent').value = '';
+                document.getElementById('lessonVideo').value = '';
+                showNotice("Đã đăng bài học mới thành công!", "✨");
+                loadLessons();
+            }
+        }
+
+        async function deleteLesson(id) {
+            const ok = await showConfirm("Bạn chắc chắn muốn xóa bài học này?", "🗑️");
+            if (!ok) return;
+            await supabaseClient.from('lessons').delete().eq('id', id);
+            loadLessons();
+        }
+
+        async function loadLessons() {
+            const { data } = await supabaseClient.from('lessons').select('*').order('created_at', { ascending: false });
+            const listDiv = document.getElementById('lessonsList');
+            if (!data || data.length === 0) {
+                listDiv.innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">🌸 Chưa có bài học nào được đăng.</div>`;
+                return;
+            }
+            listDiv.innerHTML = data.map(lesson => `
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-100 hover:shadow-md transition">
+                    <div class="flex justify-between items-start gap-2">
+                        <h4 class="font-bold text-purple-700 text-lg zh-text">${lesson.title}</h4>
+                        ${currentUserRole === 'teacher' ? `<button onclick="deleteLesson('${lesson.id}')" class="text-xs text-rose-400 hover:text-rose-600 font-bold">Xóa</button>` : ''}
+                    </div>
+                    <p class="text-gray-600 mt-2 whitespace-pre-line text-sm leading-relaxed zh-text">${lesson.content || ''}</p>
+                    ${lesson.video_url ? `<a href="${lesson.video_url}" target="_blank" class="inline-flex items-center gap-1.5 mt-3.5 px-3.5 py-1.5 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-full text-xs font-bold transition">🔗 Xem Video / Audio / Tài liệu</a>` : ''}
+                </div>
+            `).join('');
         }
 
         // ==================== TAB 2: FLASHCARD & KHO AUDIO ====================
-        const LEVEL_DISPLAY_NAMES = {
-            msutong1: 'Msutong 1',
-            msutong2: 'Msutong 2',
-            msutong3: 'Msutong 3',
-            msutong4: 'Msutong 4'
-        };
-
-        function getWordsByLevel(lvl) {
-            const lessons = CURRICULUM_DATA[lvl] || [];
-            const label = LEVEL_DISPLAY_NAMES[lvl] || lvl.toUpperCase();
-            return lessons.flatMap(l => l.words.map(w => ({ ...w, levelLabel: label })));
-        }
-
-        function currentFcWord() {
-            return currentFcList[currentFcIndex] || { zh: '你好', py: 'nǐ hǎo', vi: 'Xin chào', exampleZh: '你好！', exampleVi: 'Xin chào!', levelLabel: 'Msutong 1' };
-        }
-
         function changeFlashcardLevel() {
             currentFcLevel = document.getElementById('fcLevelSelect').value;
-            currentFcList = getWordsByLevel(currentFcLevel);
+            const lessons = CURRICULUM_DATA[currentFcLevel] || [];
+            currentFcList = lessons.flatMap(l => l.words || []);
             currentFcIndex = 0;
             renderFlashcard();
             renderAudioLibrary();
@@ -1341,19 +1456,22 @@
             renderFlashcard();
         }
 
+        function currentFcWord() {
+            return currentFcList[currentFcIndex] || { zh: '你好', py: 'nǐ hǎo', vi: 'Xin chào', exampleZh: '你好！', exampleVi: 'Xin chào!' };
+        }
+
         function renderFlashcard() {
-            const list = currentFcList;
             const word = currentFcWord();
             document.getElementById('flashcardInner').classList.remove('is-flipped');
-            document.getElementById('fcCounter').innerText = `${currentFcIndex + 1} / ${list.length}`;
-            document.getElementById('fcBadge').innerText = word.levelLabel;
+            const levelNames = { msutong1: 'Msutong 1', msutong2: 'Msutong 2', msutong3: 'Msutong 3', msutong4: 'Msutong 4' };
+            document.getElementById('fcBadge').innerText = levelNames[currentFcLevel] || 'Msutong';
             document.getElementById('fcHanzi').innerText = word.zh;
             document.getElementById('fcPinyin').innerText = word.py;
             document.getElementById('fcMeaning').innerText = word.vi;
-            document.getElementById('fcExampleZh').innerText = word.exampleZh || word.zh;
-            document.getElementById('fcExampleVi').innerText = word.exampleVi || word.vi;
+            document.getElementById('fcExampleZh').innerText = word.exampleZh || '';
+            document.getElementById('fcExampleVi').innerText = word.exampleVi || '';
+            document.getElementById('fcCounter').innerText = `${currentFcList.length ? currentFcIndex + 1 : 0} / ${currentFcList.length}`;
             document.getElementById('fcMasteredCount').innerText = masteredWords.size;
-            document.getElementById('statMastered').innerText = masteredWords.size;
         }
 
         function flipFlashcard() {
@@ -1376,6 +1494,8 @@
             const word = currentFcWord();
             masteredWords.add(word.zh);
             persistProgress();
+            updateDailyStreakAndGoal();
+            loadLeaderboard();
             nextFlashcard();
         }
 
@@ -1383,150 +1503,280 @@
             const showPy = document.getElementById('toggleAudioPinyin').checked;
             const showVi = document.getElementById('toggleAudioVi').checked;
             const lessons = CURRICULUM_DATA[currentFcLevel] || [];
-            const allLines = lessons.flatMap(l => l.dialogue);
+            const lines = lessons.flatMap(l => l.dialogue || []);
             const container = document.getElementById('audioLibraryList');
 
-            container.innerHTML = allLines.map((line, idx) => `
-                <div class="p-4 rounded-2xl bg-white border border-pink-100 flex flex-wrap items-center justify-between gap-3 hover:shadow-sm transition">
-                    <div class="flex-1 min-w-[200px]">
-                        <div class="text-xs font-bold text-rose-400 mb-0.5">Track #${idx + 1} • ${line.speaker}</div>
-                        <div class="text-base font-bold text-gray-800 zh-text">${line.zh}</div>
+            if (!lines.length) {
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center py-4">Chưa có đoạn hội thoại cho cấp độ này.</p>`;
+                return;
+            }
+
+            container.innerHTML = lines.map(line => `
+                <div class="p-3.5 rounded-2xl bg-white border border-pink-100 flex items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <div class="font-bold text-gray-800 text-sm md:text-base zh-text">${line.zh}</div>
                         ${showPy ? `<div class="text-xs font-semibold text-purple-500 mt-0.5">${line.py}</div>` : ''}
                         ${showVi ? `<div class="text-xs text-gray-500 mt-0.5">${line.vi}</div>` : ''}
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="speakChinese('${escAttr(line.zh)}', 0.95)" class="px-3.5 py-2 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold transition">▶ 1.0x</button>
-                        <button onclick="speakChinese('${escAttr(line.zh)}', 0.65)" class="px-3.5 py-2 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-600 text-xs font-bold transition">🐢 0.7x</button>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="speakChinese('${escAttr(line.zh)}', 0.95)" class="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold transition">🔊 1.0x</button>
+                        <button onclick="speakChinese('${escAttr(line.zh)}', 0.65)" class="px-2.5 py-1.5 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-600 text-xs font-bold transition">🐢 0.7x</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // ==================== TAB 3: TẬP VIẾT CHỮ HÁN (HANZI WRITER) ====================
+        // ==================== TAB 3: TẬP VIẾT CHỮ HÁN ====================
         function initHanziPresets() {
             const container = document.getElementById('hanziPresetButtons');
             container.innerHTML = HANZI_PRESETS.map(item => `
-                <button onclick="selectPresetHanzi('${item.char}', '${item.py}', '${item.vi}')" class="w-11 h-11 rounded-2xl bg-white border-2 border-pink-100 hover:border-rose-400 hover:bg-pink-50 text-lg font-bold text-gray-700 zh-text transition shadow-sm">
+                <button onclick="loadHanziChar('${escAttr(item.char)}', '${escAttr(item.py)}', '${escAttr(item.vi)}')" class="px-3.5 py-1.5 rounded-xl bg-white border border-pink-200 hover:bg-pink-50 hover:border-rose-300 font-bold text-gray-700 zh-text text-base transition shadow-sm">
                     ${item.char}
                 </button>
             `).join('');
         }
 
-        function selectPresetHanzi(char, py, vi) {
+        function loadHanziChar(char, py = '', vi = '') {
+            if (!char) return;
             currentWritingChar = char;
             document.getElementById('currentHanziChar').innerText = char;
-            document.getElementById('currentHanziPinyin').innerText = py;
-            document.getElementById('currentHanziMeaning').innerText = `Nghĩa: ${vi}`;
-            renderHanziWriter(char);
+            document.getElementById('currentHanziPinyin').innerText = py || '';
+            document.getElementById('currentHanziMeaning').innerText = vi ? `Nghĩa: ${vi}` : 'Tập viết chữ Hán tự chọn';
+            document.getElementById('hanziQuizStatus').innerText = 'Bấm "Xem nét mẫu" hoặc "Tự tô nét" để bắt đầu!';
+
+            const target = document.getElementById('hanziTarget');
+            target.innerHTML = '';
+            try {
+                if (typeof HanziWriter !== 'undefined') {
+                    hanziWriterInstance = HanziWriter.create('hanziTarget', char, {
+                        width: 230,
+                        height: 230,
+                        padding: 12,
+                        showOutline: true,
+                        strokeAnimationSpeed: 1,
+                        delayBetweenStrokes: 250,
+                        strokeColor: '#E11D48',
+                        radicalColor: '#8B5CF6',
+                        outlineColor: '#FBCFE8',
+                        drawingColor: '#4A4458',
+                        drawingWidth: 16
+                    });
+                } else {
+                    target.innerHTML = `<span class="text-7xl font-bold text-rose-400 zh-text">${char}</span>`;
+                }
+            } catch (e) {
+                target.innerHTML = `<span class="text-7xl font-bold text-rose-400 zh-text">${char}</span>`;
+            }
         }
 
         function loadCustomHanzi() {
             const val = document.getElementById('customHanziInput').value.trim();
-            if (!val) return showNotice("Hãy nhập 1 chữ Hán (VD: 福, 龙, 爱)!", "✍️");
-            const char = val.charAt(0);
-            currentWritingChar = char;
-            document.getElementById('currentHanziChar').innerText = char;
-            document.getElementById('currentHanziPinyin').innerText = 'Chữ tự chọn';
-            document.getElementById('currentHanziMeaning').innerText = 'Bấm nghe phát âm hoặc xem mẫu nét viết.';
-            renderHanziWriter(char);
-        }
-
-        function renderHanziWriter(char) {
-            const target = document.getElementById('hanziTarget');
-            target.innerHTML = '';
-            document.getElementById('hanziQuizStatus').innerText = 'Bấm "Xem nét mẫu" hoặc "Tự tô nét" để luyện tập!';
-            try {
-                if (typeof HanziWriter === 'undefined') {
-                    target.innerHTML = `<span class="text-7xl zh-text text-gray-700">${char}</span>`;
-                    return;
-                }
-                hanziWriterInstance = HanziWriter.create('hanziTarget', char, {
-                    width: 230,
-                    height: 230,
-                    padding: 10,
-                    strokeColor: '#4A4458',
-                    radicalColor: '#FB7185',
-                    outlineColor: '#F3E8FF',
-                    drawingColor: '#E11D48',
-                    drawingWidth: 16,
-                    showOutline: true
-                });
-            } catch (err) {
-                target.innerHTML = `<span class="text-7xl zh-text text-gray-700">${char}</span>`;
-            }
+            if (!val) return showNotice("Vui lòng nhập 1 chữ Hán (VD: 爱, 学, 中)!", "✍️");
+            const firstChar = Array.from(val)[0];
+            const found = getAllCurriculumWords().find(w => w.zh.includes(firstChar));
+            loadHanziChar(firstChar, found ? found.py : '', found ? found.vi : '');
         }
 
         function animateHanzi() {
-            if (!hanziWriterInstance) return;
-            document.getElementById('hanziQuizStatus').innerText = '👀 Đang chạy hoạt ảnh thứ tự nét...';
-            hanziWriterInstance.animateCharacter({
-                onComplete: () => {
-                    document.getElementById('hanziQuizStatus').innerText = '✨ Xong rồi! Giờ bạn bấm "Tự tô nét" để thực hành nhé.';
-                }
-            });
+            if (!hanziWriterInstance) loadHanziChar(currentWritingChar);
+            if (hanziWriterInstance) {
+                document.getElementById('hanziQuizStatus').innerText = '▶️ Đang trình diễn thứ tự nét chuẩn...';
+                hanziWriterInstance.animateCharacter({
+                    onComplete: () => {
+                        document.getElementById('hanziQuizStatus').innerText = '✨ Hoàn thành nét mẫu! Bấm "Tự tô nét" để luyện tay nhé.';
+                    }
+                });
+            }
         }
 
         function quizHanzi() {
-            if (!hanziWriterInstance) return;
-            document.getElementById('hanziQuizStatus').innerText = '✍️ Hãy dùng chuột hoặc ngón tay tô lần lượt từng nét!';
-            hanziWriterInstance.quiz({
-                onComplete: (summaryData) => {
-                    document.getElementById('hanziQuizStatus').innerText = `🎉 Tuyệt vời! Bạn viết xong chữ "${currentWritingChar}" (sai ${summaryData.totalMistakes} nét).`;
-                    speakChinese(currentWritingChar, 0.9);
-                }
-            });
+            if (!hanziWriterInstance) loadHanziChar(currentWritingChar);
+            if (hanziWriterInstance) {
+                document.getElementById('hanziQuizStatus').innerText = '✍️ Hãy dùng chuột hoặc ngón tay tô theo đúng thứ tự nét!';
+                hanziWriterInstance.quiz({
+                    onMistake: () => {
+                        document.getElementById('hanziQuizStatus').innerText = '💡 Chưa đúng nét hoặc chiều viết, thử lại nhé!';
+                    },
+                    onCorrectStroke: (data) => {
+                        document.getElementById('hanziQuizStatus').innerText = `✅ Chuẩn rồi! Còn ${data.strokesRemaining} nét nữa.`;
+                    },
+                    onComplete: () => {
+                        document.getElementById('hanziQuizStatus').innerText = '🎉 Tuyệt vời! Bạn đã viết chuẩn xác chữ ' + currentWritingChar + '!';
+                        speakChinese(currentWritingChar, 0.9);
+                    }
+                });
+            }
         }
-        // ==================== TAB 4: BÀI TẬP CHUẨN MSUTONG & LỚP HỌC ====================
+
+        // ==================== TAB 4: BÀI TẬP & THI THỬ ====================
         function renderBuiltInQuizzes() {
-            const container = document.getElementById('builtInQuizzesList');
-            container.innerHTML = BUILTIN_QUIZZES.map(q => `
-                <div class="p-5 rounded-2xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-100 hover:shadow-md transition flex flex-col justify-between gap-4">
+            const listDiv = document.getElementById('builtInQuizzesList');
+            listDiv.innerHTML = BUILTIN_QUIZZES.map(q => `
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-100 hover:shadow-md hover:-translate-y-0.5 transition flex flex-col justify-between gap-4">
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             ${typeLabels['msutong']}
                             <span class="text-xs font-bold text-gray-400 bg-white px-2.5 py-1 rounded-full border border-purple-100">⏱ ${q.time_limit_minutes} phút • ${q.questions.length} câu</span>
                         </div>
-                        <h4 class="font-bold text-gray-700 text-base">${q.title}</h4>
+                        <h4 class="font-bold text-gray-700 text-base zh-text">${q.title}</h4>
                     </div>
-                    <button onclick="startBuiltInQuiz('${q.id}')" class="w-full btn-pastel-lavender text-white py-2.5 rounded-xl text-xs font-bold transition">Bắt đầu luyện tập ✨</button>
+                    <button onclick="startBuiltInQuiz('${q.id}')" class="w-full btn-pastel-lavender text-white py-2.5 rounded-xl text-xs font-bold transition">Làm bài ngay ✨</button>
                 </div>
             `).join('');
         }
 
-        function startBuiltInQuiz(id) {
-            const quiz = BUILTIN_QUIZZES.find(q => q.id === id);
+        function startBuiltInQuiz(quizId) {
+            const quiz = BUILTIN_QUIZZES.find(q => q.id === quizId);
             if (!quiz) return;
-            activeQuizIsBuiltIn = true;
             activeQuiz = { id: quiz.id, title: quiz.title, type: quiz.type };
             activeQuestions = quiz.questions;
-            openQuizRunner(quiz.title, quiz.questions, quiz.time_limit_minutes);
+            activeQuizIsBuiltIn = true;
+            openActiveQuizUI(quiz.title, quiz.questions, quiz.time_limit_minutes);
         }
 
-        function openQuizRunner(title, questions, minutes) {
-            document.getElementById('quizReviewArea').classList.add('hidden');
+        function addQuestionField() {
+            const container = document.getElementById('questionsBuilder');
+            const idx = container.children.length + 1;
+            const div = document.createElement('div');
+            div.className = 'p-4 border-2 border-emerald-100 rounded-2xl bg-emerald-50/30 question-item space-y-2.5';
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-sm text-emerald-700">Câu hỏi ${idx}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-xs text-rose-400 hover:text-rose-600 font-bold">Xóa câu này</button>
+                </div>
+                <input type="text" class="q-text w-full p-2.5 border border-emerald-200 rounded-xl bg-white text-sm zh-text" placeholder="Nhập nội dung câu hỏi (Hỗ trợ chữ Hán & Pinyin)...">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <input type="text" class="q-opt-A p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án A">
+                    <input type="text" class="q-opt-B p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án B">
+                    <input type="text" class="q-opt-C p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án C">
+                    <input type="text" class="q-opt-D p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án D">
+                </div>
+                <div class="flex items-center gap-2 pt-1">
+                    <label class="text-xs font-bold text-gray-600">Đáp án đúng:</label>
+                    <select class="q-correct px-3 py-1.5 border border-emerald-200 rounded-xl bg-white text-sm font-bold text-emerald-700">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        async function saveQuiz() {
+            const title = document.getElementById('quizTitle').value.trim();
+            const type = document.getElementById('quizType').value;
+            const time_limit_minutes = parseInt(document.getElementById('quizTime').value) || 15;
+            const items = document.querySelectorAll('.question-item');
+
+            if (!title) return showNotice("Vui lòng nhập tên bài!", "⚠️");
+            if (items.length === 0) return showNotice("Vui lòng thêm ít nhất 1 câu hỏi!", "⚠️");
+
+            const questionsToInsert = [];
+            for (let item of items) {
+                const qText = item.querySelector('.q-text').value.trim();
+                const optA = item.querySelector('.q-opt-A').value.trim();
+                const optB = item.querySelector('.q-opt-B').value.trim();
+                const optC = item.querySelector('.q-opt-C').value.trim();
+                const optD = item.querySelector('.q-opt-D').value.trim();
+                const correct = item.querySelector('.q-correct').value;
+
+                if (!qText || !optA || !optB) return showNotice("Mỗi câu hỏi cần có nội dung và ít nhất đáp án A, B!", "⚠️");
+                questionsToInsert.push({
+                    question_text: qText,
+                    options: { A: optA, B: optB, C: optC, D: optD },
+                    correct_answer: correct
+                });
+            }
+
+            const { data: quizData, error: quizErr } = await supabaseClient
+                .from('quizzes').insert([{ title, type, time_limit_minutes }]).select().single();
+
+            if (quizErr) return showNotice("Lỗi tạo đề: " + quizErr.message, "❌");
+
+            const formattedQuestions = questionsToInsert.map(q => ({ ...q, quiz_id: quizData.id }));
+            const { error: qErr } = await supabaseClient.from('questions').insert(formattedQuestions);
+
+            if (qErr) showNotice("Lỗi lưu câu hỏi: " + qErr.message, "❌");
+            else {
+                await showNotice("Đã xuất bản bài thành công!", "✨");
+                document.getElementById('quizTitle').value = '';
+                document.getElementById('questionsBuilder').innerHTML = '';
+                addQuestionField();
+                loadQuizzes();
+            }
+        }
+
+        async function deleteQuiz(id) {
+            const ok = await showConfirm("Xóa bài này sẽ xóa cả điểm số liên quan. Bạn chắc chắn chứ?", "🗑️");
+            if (!ok) return;
+            await supabaseClient.from('quizzes').delete().eq('id', id);
+            loadQuizzes();
+        }
+
+        async function loadQuizzes() {
+            const listDiv = document.getElementById('quizzesList');
+            if (isGuestMode) {
+                listDiv.innerHTML = `<div class="col-span-full text-center py-6 text-gray-400 text-sm">🔐 Đăng nhập tài khoản để xem đề kiểm tra riêng của giáo viên.</div>`;
+                return;
+            }
+            const { data } = await supabaseClient.from('quizzes').select('*').order('created_at', { ascending: false });
+            if (!data || data.length === 0) {
+                listDiv.innerHTML = `<div class="col-span-full text-center py-6 text-gray-400 text-sm">🌸 Giáo viên chưa đăng thêm đề riêng nào.</div>`;
+                return;
+            }
+            listDiv.innerHTML = data.map(q => `
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-white to-pink-50/50 border border-pink-100 hover:shadow-md hover:-translate-y-0.5 transition flex flex-col justify-between gap-4">
+                    <div>
+                        <div class="flex justify-between items-center mb-2.5">
+                            ${typeLabels[q.type] || typeLabels['bai_tap']}
+                            <span class="text-xs font-bold text-gray-400 bg-white px-2.5 py-1 rounded-full border border-pink-100">⏱ ${q.time_limit_minutes} phút</span>
+                        </div>
+                        <h4 class="font-bold text-gray-700 text-base zh-text">${q.title}</h4>
+                    </div>
+                    <div class="flex justify-between items-center pt-3 border-t border-pink-100/70">
+                        <button onclick="startQuiz('${q.id}', '${escAttr(q.title)}', ${q.time_limit_minutes})" class="btn-pastel-pink text-white px-5 py-2 rounded-xl text-xs font-bold transition">Làm bài ngay ✨</button>
+                        ${currentUserRole === 'teacher' ? `<button onclick="deleteQuiz('${q.id}')" class="text-xs text-rose-400 hover:text-rose-600 font-bold">Xóa đề</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function startQuiz(quizId, title, minutes) {
+            const { data: questions, error } = await supabaseClient.from('questions').select('*').eq('quiz_id', quizId);
+            if (error || !questions || questions.length === 0) return showNotice("Bài này chưa có câu hỏi!", "⚠️");
+
+            activeQuiz = { id: quizId, title, type: 'bai_tap' };
+            activeQuestions = questions;
+            activeQuizIsBuiltIn = false;
+            openActiveQuizUI(title, questions, minutes);
+        }
+
+        function openActiveQuizUI(title, questions, minutes) {
             document.getElementById('builtInQuizzesContainer').classList.add('hidden');
             document.getElementById('quizListContainer').classList.add('hidden');
             document.getElementById('teacherQuizPanel').classList.add('hidden');
+            document.getElementById('quizReviewArea').classList.add('hidden');
             document.getElementById('activeQuizArea').classList.remove('hidden');
+
             document.getElementById('activeQuizTitle').innerText = title;
             document.getElementById('activeQuizMeta').innerText = `Tổng số: ${questions.length} câu hỏi`;
 
             document.getElementById('activeQuizQuestions').innerHTML = questions.map((q, idx) => {
-                const opts = Object.entries(q.options).filter(([k, v]) => v);
+                const opts = Object.entries(q.options || {}).filter(([k, v]) => v);
                 return `
                     <div class="p-5 bg-white/90 rounded-2xl border border-pink-100 shadow-sm">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3.5">
-                            <p class="font-bold text-gray-800 text-base md:text-lg leading-relaxed zh-text">
-                                <span class="inline-block px-2.5 py-0.5 mr-1.5 bg-pink-100 text-rose-500 rounded-lg text-xs align-middle">Câu ${idx + 1}</span>
-                                ${q.question_text}
-                            </p>
-                            ${q.audio_text ? `
-                                <div class="flex gap-1.5">
-                                    <button type="button" onclick="speakChinese('${escAttr(q.audio_text)}', 0.9)" class="px-3.5 py-1.5 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-xs font-bold transition">🔊 Nghe câu hỏi</button>
-                                    <button type="button" onclick="speakChinese('${escAttr(q.audio_text)}', 0.65)" class="px-3.5 py-1.5 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 text-xs font-bold transition">🐢 Chậm</button>
-                                </div>
-                            ` : ''}
-                        </div>
+                        <p class="font-bold text-gray-800 mb-3 text-base md:text-lg leading-relaxed zh-text">
+                            <span class="inline-block px-2.5 py-0.5 mr-1.5 bg-pink-100 text-rose-500 rounded-lg text-xs align-middle">Câu ${idx + 1}</span>
+                            ${q.question_text}
+                        </p>
+                        ${q.audio_text ? `
+                            <div class="mb-3.5 flex items-center gap-2">
+                                <button type="button" onclick="speakChinese('${escAttr(q.audio_text)}', 0.9)" class="px-4 py-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-xs font-bold transition">🔊 Nghe câu hỏi</button>
+                                <button type="button" onclick="speakChinese('${escAttr(q.audio_text)}', 0.65)" class="px-3.5 py-2 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-600 border border-sky-200 text-xs font-bold transition">🐢 Nghe chậm</button>
+                            </div>
+                        ` : ''}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             ${opts.map(([key, val]) => `
                                 <label class="option-card flex items-center gap-3 p-3 bg-white border-2 border-pink-100/80 rounded-xl cursor-pointer hover:border-pink-300 transition">
@@ -1554,161 +1804,13 @@
             }, 1000);
         }
 
-        // ==================== SUPABASE: BÀI HỌC & BÀI KIỂM TRA LỚP HỌC ====================
-        async function addLesson() {
-            const title = document.getElementById('lessonTitle').value.trim();
-            const content = document.getElementById('lessonContent').value.trim();
-            const video_url = document.getElementById('lessonVideo').value.trim();
-            if (!title) return showNotice("Vui lòng nhập tiêu đề bài học!", "⚠️");
-
-            const { error } = await supabaseClient.from('lessons').insert([{ title, content, video_url }]);
-            if (error) showNotice("Lỗi: " + error.message, "❌");
-            else {
-                document.getElementById('lessonTitle').value = '';
-                document.getElementById('lessonContent').value = '';
-                document.getElementById('lessonVideo').value = '';
-                loadLessons();
-            }
-        }
-
-        async function deleteLesson(id) {
-            const ok = await showConfirm("Bạn chắc chắn muốn xóa bài học này?", "🗑️");
-            if (!ok) return;
-            await supabaseClient.from('lessons').delete().eq('id', id);
-            loadLessons();
-        }
-
-        async function loadLessons() {
-            const { data } = await supabaseClient.from('lessons').select('*').order('created_at', { ascending: false });
-            const listDiv = document.getElementById('lessonsList');
-            if (!data || data.length === 0) {
-                listDiv.innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">🌸 Chưa có bài giảng lớp học nào được đăng.</div>`;
-                return;
-            }
-            listDiv.innerHTML = data.map(lesson => `
-                <div class="p-5 rounded-2xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-100 hover:shadow-md transition">
-                    <div class="flex justify-between items-start gap-2">
-                        <h4 class="font-bold text-purple-700 text-lg zh-text">${lesson.title}</h4>
-                        ${currentUserRole === 'teacher' ? `<button onclick="deleteLesson('${lesson.id}')" class="text-xs text-rose-400 hover:text-rose-600 font-bold">Xóa</button>` : ''}
-                    </div>
-                    <p class="text-gray-600 mt-2 whitespace-pre-line text-sm leading-relaxed zh-text">${lesson.content || ''}</p>
-                    ${lesson.video_url ? `<a href="${lesson.video_url}" target="_blank" class="inline-flex items-center gap-1.5 mt-3.5 px-3.5 py-1.5 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-full text-xs font-bold transition">🔗 Xem Video / Tài liệu</a>` : ''}
-                </div>
-            `).join('');
-        }
-
-        function addQuestionField() {
-            const container = document.getElementById('questionsBuilder');
-            const idx = container.children.length + 1;
-            const div = document.createElement('div');
-            div.className = 'p-4 border-2 border-emerald-100 rounded-2xl bg-emerald-50/30 question-item space-y-2.5';
-            div.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <span class="font-bold text-sm text-emerald-700">Câu hỏi ${idx}</span>
-                    <button onclick="this.parentElement.parentElement.remove()" class="text-xs text-rose-400 hover:text-rose-600 font-bold">Xóa câu này</button>
-                </div>
-                <input type="text" class="q-text w-full p-2.5 border border-emerald-200 rounded-xl bg-white text-sm zh-text" placeholder="Nhập nội dung câu hỏi (Hỗ trợ chữ Hán & Pinyin)...">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <input type="text" class="q-opt-A p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án A">
-                    <input type="text" class="q-opt-B p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án B">
-                    <input type="text" class="q-opt-C p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án C">
-                    <input type="text" class="q-opt-D p-2.5 border border-emerald-100 rounded-xl bg-white text-sm zh-text" placeholder="Đáp án D">
-                </div>
-                <div class="flex items-center gap-2 pt-1">
-                    <label class="text-xs font-bold text-gray-600">Đáp án đúng:</label>
-                    <select class="q-correct px-3 py-1.5 border border-emerald-200 rounded-xl bg-white text-sm font-bold text-emerald-700">
-                        <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
-                    </select>
-                </div>
-            `;
-            container.appendChild(div);
-        }
-
-        async function saveQuiz() {
-            const title = document.getElementById('quizTitle').value.trim();
-            const type = document.getElementById('quizType').value;
-            const time_limit_minutes = parseInt(document.getElementById('quizTime').value) || 15;
-            const items = document.querySelectorAll('.question-item');
-
-            if (!title) return showNotice("Vui lòng nhập tên bài!", "⚠️");
-            if (items.length === 0) return showNotice("Vui lòng thêm ít nhất 1 câu hỏi!", "⚠️");
-
-            const questionsToInsert = [];
-            for (let item of items) {
-                const qText = item.querySelector('.q-text').value.trim();
-                const optA = item.querySelector('.q-opt-A').value.trim();
-                const optB = item.querySelector('.q-opt-B').value.trim();
-                const optC = item.querySelector('.q-opt-C').value.trim();
-                const optD = item.querySelector('.q-opt-D').value.trim();
-                const correct = item.querySelector('.q-correct').value;
-
-                if (!qText || !optA || !optB) return showNotice("Mỗi câu hỏi cần có nội dung và ít nhất đáp án A, B!", "⚠️");
-                questionsToInsert.push({ question_text: qText, options: { A: optA, B: optB, C: optC, D: optD }, correct_answer: correct });
-            }
-
-            const { data: quizData, error: quizErr } = await supabaseClient.from('quizzes').insert([{ title, type, time_limit_minutes }]).select().single();
-            if (quizErr) return showNotice("Lỗi tạo đề: " + quizErr.message, "❌");
-
-            const formattedQuestions = questionsToInsert.map(q => ({ ...q, quiz_id: quizData.id }));
-            const { error: qErr } = await supabaseClient.from('questions').insert(formattedQuestions);
-
-            if (qErr) showNotice("Lỗi lưu câu hỏi: " + qErr.message, "❌");
-            else {
-                await showNotice("Đã xuất bản bài thành công!", "✨");
-                document.getElementById('quizTitle').value = '';
-                document.getElementById('questionsBuilder').innerHTML = '';
-                addQuestionField();
-                loadQuizzes();
-            }
-        }
-
-        async function deleteQuiz(id) {
-            const ok = await showConfirm("Xóa bài này sẽ xóa cả điểm số liên quan. Bạn chắc chắn chứ?", "🗑️");
-            if (!ok) return;
-            await supabaseClient.from('quizzes').delete().eq('id', id);
-            loadQuizzes();
-        }
-
-        async function loadQuizzes() {
-            const { data } = await supabaseClient.from('quizzes').select('*').order('created_at', { ascending: false });
-            const listDiv = document.getElementById('quizzesList');
-            if (!data || data.length === 0) {
-                listDiv.innerHTML = `<div class="col-span-full text-center py-6 text-gray-400 text-sm">🌸 Chưa có đề kiểm tra riêng nào của lớp.</div>`;
-                return;
-            }
-            listDiv.innerHTML = data.map(q => `
-                <div class="p-5 rounded-2xl bg-gradient-to-br from-white to-pink-50/50 border border-pink-100 hover:shadow-md transition flex flex-col justify-between gap-4">
-                    <div>
-                        <div class="flex justify-between items-center mb-2.5">
-                            ${typeLabels[q.type] || typeLabels['bai_tap']}
-                            <span class="text-xs font-bold text-gray-400 bg-white px-2.5 py-1 rounded-full border border-pink-100">⏱ ${q.time_limit_minutes} phút</span>
-                        </div>
-                        <h4 class="font-bold text-gray-700 text-base zh-text">${q.title}</h4>
-                    </div>
-                    <div class="flex justify-between items-center pt-3 border-t border-pink-100/70">
-                        <button onclick="startQuiz('${q.id}', '${q.title.replace(/'/g, "\\'")}', ${q.time_limit_minutes})" class="btn-pastel-pink text-white px-5 py-2 rounded-xl text-xs font-bold transition">Làm bài ngay ✨</button>
-                        ${currentUserRole === 'teacher' ? `<button onclick="deleteQuiz('${q.id}')" class="text-xs text-rose-400 hover:text-rose-600 font-bold">Xóa đề</button>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        async function startQuiz(quizId, title, minutes) {
-            const { data: questions, error } = await supabaseClient.from('questions').select('*').eq('quiz_id', quizId);
-            if (error || !questions || questions.length === 0) return showNotice("Bài này chưa có câu hỏi!", "⚠️");
-            activeQuizIsBuiltIn = false;
-            activeQuiz = { id: quizId, title };
-            activeQuestions = questions;
-            openQuizRunner(title, questions, minutes);
-        }
-
         function updateQuizProgress() {
-            const total = activeQuestions.length;
+            const total = activeQuestions.length || 1;
             let answered = 0;
             activeQuestions.forEach(q => {
                 if (document.querySelector(`input[name="q_${q.id}"]:checked`)) answered++;
             });
-            document.getElementById('quizProgressText').innerText = `${answered} / ${total} câu`;
+            document.getElementById('quizProgressText').innerText = `${answered} / ${activeQuestions.length} câu`;
             document.getElementById('quizProgressBar').style.width = `${(answered / total) * 100}%`;
         }
 
@@ -1719,7 +1821,7 @@
         }
 
         async function cancelQuiz() {
-            const ok = await showConfirm("Bạn muốn thoát bài làm hiện tại? Kết quả sẽ không được lưu.", "⚠️");
+            const ok = await showConfirm("Bạn muốn thoát bài làm hiện tại? Kết quả sẽ không được lưu.", "❓");
             if (!ok) return;
             clearInterval(timerInterval);
             closeActiveQuiz();
@@ -1745,15 +1847,13 @@
             });
 
             const score = Math.round((correctCount / activeQuestions.length) * 10 * 10) / 10;
-
-            // Lưu dữ liệu để học viên xem lại chi tiết đáp án
             lastQuizReviewData = {
                 title: activeQuiz.title,
                 score,
                 correctCount,
                 total: activeQuestions.length,
-                questions: [...activeQuestions],
-                answers: { ...answers }
+                questions: activeQuestions,
+                answers
             };
 
             if (activeQuizIsBuiltIn || isGuestMode) {
@@ -1765,6 +1865,8 @@
                     submitted_at: new Date().toISOString()
                 });
                 persistProgress();
+                updateDailyStreakAndGoal();
+                loadLeaderboard();
                 showQuizResultPopup(score, correctCount);
             } else {
                 const { error } = await supabaseClient.from('submissions').insert([{
@@ -1775,8 +1877,30 @@
                     answers: answers
                 }]);
                 if (error) showNotice("Lỗi khi nộp bài: " + error.message, "❌");
-                else showQuizResultPopup(score, correctCount);
+                else {
+                    updateDailyStreakAndGoal();
+                    loadLeaderboard();
+                    showQuizResultPopup(score, correctCount);
+                }
             }
+        }
+
+        function showQuizResultPopup(score, correctCount) {
+            closeActiveQuiz();
+            document.getElementById('resultScore').innerText = `${score} / 10`;
+            document.getElementById('resultDetail').innerText = `Bạn làm đúng ${correctCount} / ${activeQuestions.length} câu`;
+
+            if (score >= 9) {
+                document.getElementById('resultEmoji').innerText = '🏆';
+                document.getElementById('resultMessage').innerText = '太棒了！(Xuất sắc quá đi!)';
+            } else if (score >= 7) {
+                document.getElementById('resultEmoji').innerText = '🌸';
+                document.getElementById('resultMessage').innerText = '很好！(Làm tốt lắm, cố gắng thêm chút nữa nhé!)';
+            } else {
+                document.getElementById('resultEmoji').innerText = '💪';
+                document.getElementById('resultMessage').innerText = '加油！(Cố lên nhé, xem lại giải thích rồi thử lại nha!)';
+            }
+            document.getElementById('resultModal').classList.remove('hidden');
         }
 
         function openQuizReview() {
@@ -1786,31 +1910,29 @@
             document.getElementById('builtInQuizzesContainer').classList.add('hidden');
             document.getElementById('quizListContainer').classList.add('hidden');
             document.getElementById('teacherQuizPanel').classList.add('hidden');
-            document.getElementById('activeQuizArea').classList.add('hidden');
             document.getElementById('quizReviewArea').classList.remove('hidden');
 
             document.getElementById('reviewQuizTitle').innerText = `📋 Đáp án: ${lastQuizReviewData.title}`;
-            document.getElementById('reviewQuizSummary').innerText = `Điểm: ${lastQuizReviewData.score} / 10 • Đúng ${lastQuizReviewData.correctCount} / ${lastQuizReviewData.total} câu`;
+            document.getElementById('reviewQuizSummary').innerText = `Điểm: ${lastQuizReviewData.score}/10 • Đúng ${lastQuizReviewData.correctCount}/${lastQuizReviewData.total} câu`;
 
             document.getElementById('quizReviewList').innerHTML = lastQuizReviewData.questions.map((q, idx) => {
-                const userAns = lastQuizReviewData.answers[q.id];
-                const isRight = userAns === q.correct_answer;
-                const badge = isRight
-                    ? '<span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">✅ Đúng</span>'
-                    : '<span class="px-2.5 py-0.5 bg-rose-100 text-rose-600 rounded-full text-xs font-bold">❌ Sai</span>';
+                const chosen = lastQuizReviewData.answers[q.id];
+                const isRight = chosen === q.correct_answer;
+                const chosenText = chosen && q.options[chosen] ? `${chosen}. ${q.options[chosen]}` : 'Chưa chọn';
+                const correctText = `${q.correct_answer}. ${q.options[q.correct_answer] || ''}`;
 
                 return `
-                    <div class="p-4 rounded-2xl border-2 ${isRight ? 'border-emerald-100 bg-emerald-50/30' : 'border-rose-100 bg-rose-50/30'} space-y-2">
-                        <div class="flex justify-between items-start gap-2">
-                            <p class="font-bold text-sm md:text-base text-gray-800 zh-text">Câu ${idx + 1}: ${q.question_text}</p>
-                            ${badge}
+                    <div class="p-4 rounded-2xl border-2 ${isRight ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'} space-y-2">
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="font-bold text-gray-800 text-sm md:text-base zh-text">Câu ${idx + 1}: ${q.question_text}</p>
+                            <span class="shrink-0 px-2.5 py-0.5 rounded-full text-xs font-bold ${isRight ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-600'}">${isRight ? '✅ Đúng' : '❌ Sai'}</span>
                         </div>
-                        ${q.audio_text ? `<div class="text-xs text-purple-600 font-bold zh-text">🔊 Nội dung nghe: ${q.audio_text} <button onclick="speakChinese('${escAttr(q.audio_text)}', 0.9)" class="ml-1 underline text-rose-500">Nghe lại</button></div>` : ''}
-                        <div class="text-xs md:text-sm space-y-1">
-                            <p>Bạn chọn: <strong class="${isRight ? 'text-emerald-600' : 'text-rose-600'}">${userAns ? `${userAns}. ${q.options[userAns] || ''}` : '(Chưa chọn)'}</strong></p>
-                            ${!isRight ? `<p>Đáp án đúng: <strong class="text-emerald-600">${q.correct_answer}. ${q.options[q.correct_answer] || ''}</strong></p>` : ''}
+                        ${q.audio_text ? `<button onclick="speakChinese('${escAttr(q.audio_text)}', 0.9)" class="px-3 py-1 rounded-full bg-white border border-pink-200 text-rose-500 text-xs font-bold">🔊 Nghe lại: ${q.audio_text}</button>` : ''}
+                        <div class="text-xs space-y-1 pt-1">
+                            <p>Bạn chọn: <strong class="${isRight ? 'text-emerald-700' : 'text-rose-600'} zh-text">${chosenText}</strong></p>
+                            ${!isRight ? `<p>Đáp án đúng: <strong class="text-emerald-700 zh-text">${correctText}</strong></p>` : ''}
+                            ${q.explanation ? `<p class="text-purple-700 bg-white/80 p-2.5 rounded-xl border border-purple-100 mt-1.5">💡 <strong>Giải thích:</strong> ${q.explanation}</p>` : ''}
                         </div>
-                        ${q.explanation ? `<div class="text-xs text-gray-600 bg-white/90 p-3 rounded-xl border border-pink-100">💡 <strong>Giải thích:</strong> ${q.explanation}</div>` : ''}
                     </div>
                 `;
             }).join('');
@@ -1818,26 +1940,7 @@
 
         function closeQuizReview() {
             document.getElementById('quizReviewArea').classList.add('hidden');
-            document.getElementById('builtInQuizzesContainer').classList.remove('hidden');
-            document.getElementById('quizListContainer').classList.remove('hidden');
-            if (currentUserRole === 'teacher' && !isGuestMode) document.getElementById('teacherQuizPanel').classList.remove('hidden');
-        }
-
-        function showQuizResultPopup(score, correctCount) {
             closeActiveQuiz();
-            document.getElementById('resultScore').innerText = `${score} / 10`;
-            document.getElementById('resultDetail').innerText = `Bạn làm đúng ${correctCount} / ${activeQuestions.length} câu`;
-            if (score >= 9) {
-                document.getElementById('resultEmoji').innerText = '🏆';
-                document.getElementById('resultMessage').innerText = '太棒了！(Xuất sắc quá đi!)';
-            } else if (score >= 7) {
-                document.getElementById('resultEmoji').innerText = '🌸';
-                document.getElementById('resultMessage').innerText = '很好！(Làm tốt lắm, cố gắng thêm chút nữa nhé!)';
-            } else {
-                document.getElementById('resultEmoji').innerText = '💪';
-                document.getElementById('resultMessage').innerText = '加油！(Cố lên nhé, ôn lại bài rồi thử lại nha!)';
-            }
-            document.getElementById('resultModal').classList.remove('hidden');
         }
 
         function closeResultModal() {
@@ -1850,39 +1953,43 @@
             let rows = [...localSubmissions];
 
             if (!isGuestMode && currentUser) {
-                let query = supabaseClient
-                    .from('submissions')
-                    .select('*, profiles(full_name, email), quizzes(title, type)')
-                    .order('submitted_at', { ascending: false });
+                try {
+                    let query = supabaseClient
+                        .from('submissions')
+                        .select('*, profiles(full_name, email), quizzes(title, type)')
+                        .order('submitted_at', { ascending: false });
 
-                if (currentUserRole !== 'teacher') query = query.eq('student_id', currentUser.id);
+                    if (currentUserRole !== 'teacher') {
+                        query = query.eq('student_id', currentUser.id);
+                    }
 
-                const { data } = await query;
-                if (data) {
-                    const dbRows = data.map(row => ({
-                        name: row.profiles ? (row.profiles.full_name || row.profiles.email) : 'Ẩn danh',
-                        title: row.quizzes ? row.quizzes.title : '(Đề đã xóa)',
-                        type: row.quizzes ? row.quizzes.type : 'bai_tap',
-                        score: row.score,
-                        submitted_at: row.submitted_at
-                    }));
-                    rows = [...rows, ...dbRows];
-                }
+                    const { data } = await query;
+                    if (data && data.length > 0) {
+                        const dbRows = data.map(row => ({
+                            name: row.profiles ? (row.profiles.full_name || row.profiles.email) : 'Học viên',
+                            title: row.quizzes ? row.quizzes.title : '(Đề đã xóa)',
+                            type: row.quizzes ? row.quizzes.type : 'bai_tap',
+                            score: row.score,
+                            submitted_at: row.submitted_at
+                        }));
+                        rows = [...dbRows, ...localSubmissions];
+                    }
+                } catch (e) { console.warn('Không tải được lịch sử từ DB:', e); }
             }
 
-            // Cập nhật thống kê
+            document.getElementById('statMastered').innerText = masteredWords.size;
             document.getElementById('statQuizzesDone').innerText = rows.length;
-            const avg = rows.length ? (rows.reduce((sum, r) => sum + Number(r.score), 0) / rows.length).toFixed(1) : '0.0';
+            const avg = rows.length ? (rows.reduce((s, r) => s + (Number(r.score) || 0), 0) / rows.length).toFixed(1) : '0.0';
             document.getElementById('statAvgScore').innerText = avg;
 
             const tbody = document.getElementById('progressTableBody');
-            if (rows.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-gray-400">🌸 Chưa có lịch sử làm bài nào. Hãy thử làm 1 bài tập nhé!</td></tr>`;
+            if (!rows.length) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-gray-400">🌸 Chưa có dữ liệu làm bài nào. Hãy thử làm 1 bài tập Msutong nhé!</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = rows.map(row => {
-                const qType = typeLabels[row.type] || typeLabels['bai_tap'];
+                const qType = typeLabels[row.type] || typeLabels['msutong'];
                 const dateStr = new Date(row.submitted_at).toLocaleString('vi-VN');
                 const scoreColor = row.score >= 8 ? 'bg-emerald-100 text-emerald-700' : (row.score >= 5 ? 'bg-amber-100 text-amber-700' : 'bg-rose-100 text-rose-600');
                 return `
@@ -1911,16 +2018,20 @@
         async function sendResetEmail() {
             const email = document.getElementById('forgotEmailInput').value.trim();
             const msgEl = document.getElementById('forgotModalMsg');
+
             if (!email || !email.includes('@')) {
                 msgEl.style.color = "#E11D48";
                 msgEl.innerText = "Vui lòng nhập đầy đủ Gmail (có @gmail.com)!";
                 return;
             }
+
             msgEl.style.color = "#8B5CF6";
             msgEl.innerText = "Đang gửi link khôi phục về email...";
+
             const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
                 redirectTo: window.location.origin + window.location.pathname
             });
+
             if (error) {
                 msgEl.style.color = "#E11D48";
                 msgEl.innerText = "Lỗi gửi mail: " + error.message;
@@ -1930,7 +2041,7 @@
             }
         }
 
-        supabaseClient.auth.onAuthStateChange((event) => {
+        supabaseClient.auth.onAuthStateChange((event, session) => {
             if (event === 'PASSWORD_RECOVERY') {
                 document.getElementById('recoveryModal').classList.remove('hidden');
             }
@@ -1947,6 +2058,207 @@
                 document.getElementById('recoveryNewPass').value = '';
                 checkUser();
             }
+        }
+
+        // ==================== TIỆN ÍCH 2 BÊN SƯỜN & BẢNG XẾP HẠNG ====================
+        let currentWotd = { zh: '你好', py: 'nǐ hǎo', vi: 'Xin chào', exampleZh: '你好！认识你很高兴。' };
+        let pomoSeconds = 25 * 60;
+        let pomoDefaultMins = 25;
+        let pomoInterval = null;
+
+        function getAllCurriculumWords() {
+            return Object.values(CURRICULUM_DATA).flatMap(lessons => lessons.flatMap(l => l.words || []));
+        }
+
+        function initSidebars() {
+            updateDailyStreakAndGoal();
+            renderWordOfTheDay(false);
+            loadLeaderboard();
+        }
+
+        // 1. Tính điểm XP cá nhân & chuỗi ngày học (Streak)
+        function calculateMyXp() {
+            const wordsXp = masteredWords.size * 15;
+            const quizzesXp = localSubmissions.reduce((sum, s) => sum + 25 + Math.round((Number(s.score) || 0) * 5), 0);
+            return wordsXp + quizzesXp;
+        }
+
+        function updateDailyStreakAndGoal() {
+            let streak = 1;
+            try {
+                const today = new Date().toISOString().slice(0, 10);
+                const lastDate = localStorage.getItem('td_last_visit');
+                streak = parseInt(localStorage.getItem('td_streak') || '1', 10) || 1;
+                if (lastDate && lastDate !== today) {
+                    const diffDays = Math.round((new Date(today) - new Date(lastDate)) / 86400000);
+                    streak = (diffDays === 1) ? streak + 1 : 1;
+                }
+                localStorage.setItem('td_last_visit', today);
+                localStorage.setItem('td_streak', String(streak));
+            } catch (e) {}
+
+            const xp = calculateMyXp();
+            const goal = 100;
+            const pct = Math.min(100, Math.round((xp / goal) * 100));
+
+            document.getElementById('streakBadge').innerText = `${streak} ngày`;
+            document.getElementById('dailyXpText').innerText = `${xp} / ${goal} XP`;
+            document.getElementById('dailyXpBar').style.width = `${pct}%`;
+        }
+
+        // 2. Từ điển tra nhanh Msutong
+        function searchQuickDict() {
+            const q = document.getElementById('quickDictInput').value.trim().toLowerCase();
+            const resDiv = document.getElementById('quickDictResults');
+            if (!q) {
+                resDiv.innerHTML = `<p class="text-gray-400 text-center py-2">Nhập từ khóa để tra nhanh (VD: 咖啡, xièxie, rẻ...)</p>`;
+                return;
+            }
+            const matches = getAllCurriculumWords().filter(w =>
+                w.zh.includes(q) || w.py.toLowerCase().includes(q) || w.vi.toLowerCase().includes(q)
+            ).slice(0, 5);
+
+            if (matches.length === 0) {
+                resDiv.innerHTML = `<p class="text-gray-400 text-center py-2">Không tìm thấy từ khớp trong kho Msutong.</p>`;
+                return;
+            }
+
+            resDiv.innerHTML = matches.map(w => `
+                <div class="p-2.5 rounded-2xl bg-pink-50/50 border border-pink-100 flex items-center justify-between gap-2">
+                    <div class="min-w-0">
+                        <span class="font-bold text-gray-800 zh-text text-sm">${w.zh}</span>
+                        <span class="text-purple-500 font-bold ml-1">${w.py}</span>
+                        <div class="text-[11px] text-gray-500 truncate">${w.vi}</div>
+                    </div>
+                    <button onclick="speakChinese('${escAttr(w.zh)}', 0.9)" class="shrink-0 w-7 h-7 rounded-full bg-white border border-pink-200 text-rose-500 flex items-center justify-center hover:bg-pink-50 transition">🔊</button>
+                </div>
+            `).join('');
+        }
+
+        // 3. Từ vựng mỗi ngày
+        function renderWordOfTheDay(random = false) {
+            const allWords = getAllCurriculumWords();
+            if (!allWords.length) return;
+            const idx = random
+                ? Math.floor(Math.random() * allWords.length)
+                : (new Date().getDate() + new Date().getMonth() * 31) % allWords.length;
+            currentWotd = allWords[idx];
+            document.getElementById('wotdHanzi').innerText = currentWotd.zh;
+            document.getElementById('wotdPinyin').innerText = currentWotd.py;
+            document.getElementById('wotdMeaning').innerText = currentWotd.vi;
+            document.getElementById('wotdExample').innerText = currentWotd.exampleZh || '';
+        }
+
+        // 4. Bảng Xếp Hạng Học Viên (Kết hợp dữ liệu Supabase + điểm XP thực tế)
+        async function loadLeaderboard() {
+            const myName = document.getElementById('userNameDisplay').innerText || 'Bạn';
+            const myXp = calculateMyXp();
+            const boardMap = new Map();
+
+            // Lấy dữ liệu điểm thực tế từ Supabase (nếu đã đăng nhập)
+            if (!isGuestMode && currentUser) {
+                try {
+                    const { data } = await supabaseClient
+                        .from('submissions')
+                        .select('student_id, score, profiles(full_name, email)');
+                    if (data && data.length > 0) {
+                        data.forEach(row => {
+                            const key = row.student_id;
+                            const name = row.profiles ? (row.profiles.full_name || row.profiles.email.split('@')[0]) : 'Học viên';
+                            const prev = boardMap.get(key) || { id: key, name, xp: 0, isMe: key === currentUser.id };
+                            prev.xp += 25 + Math.round((Number(row.score) || 0) * 5);
+                            boardMap.set(key, prev);
+                        });
+                    }
+                } catch (e) { console.warn('Không tải được BXH từ DB:', e); }
+            }
+
+            // Đảm bảo người dùng hiện tại luôn có mặt trên bảng xếp hạng
+            const meKey = currentUser ? currentUser.id : 'me';
+            const existingMe = boardMap.get(meKey);
+            if (existingMe) {
+                existingMe.xp = Math.max(existingMe.xp, myXp) + masteredWords.size * 15;
+                existingMe.isMe = true;
+            } else {
+                boardMap.set(meKey, { id: meKey, name: myName, xp: myXp, isMe: true });
+            }
+
+            // Bổ sung học viên mẫu thi đua nếu lớp mới có ít người
+            const samplePeers = [
+                { id: 'peer_1', name: 'Nguyễn Minh Anh', xp: 340, isMe: false },
+                { id: 'peer_2', name: 'Trần Gia Huy', xp: 265, isMe: false },
+                { id: 'peer_3', name: 'Lê Thảo Nhi', xp: 190, isMe: false },
+                { id: 'peer_4', name: 'Phạm Khánh Linh', xp: 125, isMe: false }
+            ];
+            if (boardMap.size < 5) {
+                samplePeers.forEach(p => {
+                    if (boardMap.size < 5) boardMap.set(p.id, p);
+                });
+            }
+
+            const sorted = [...boardMap.values()].sort((a, b) => b.xp - a.xp);
+            const myRankIdx = sorted.findIndex(u => u.isMe);
+            const myEntry = sorted[myRankIdx] || { xp: myXp };
+
+            const medals = ['🥇', '🥈', '🥉'];
+            const listEl = document.getElementById('leaderboardList');
+            listEl.innerHTML = sorted.slice(0, 5).map((u, idx) => `
+                <div class="flex items-center justify-between p-2.5 rounded-2xl border transition ${u.isMe ? 'bg-rose-50/90 border-rose-300 shadow-sm' : 'bg-white/90 border-pink-100'}">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="w-6 text-center font-extrabold text-sm ${idx < 3 ? '' : 'text-gray-400 text-xs'}">${medals[idx] || `#${idx + 1}`}</span>
+                        <div class="truncate">
+                            <div class="text-xs font-bold ${u.isMe ? 'text-rose-600' : 'text-gray-700'} truncate">${u.name} ${u.isMe ? '(Bạn)' : ''}</div>
+                        </div>
+                    </div>
+                    <span class="shrink-0 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${idx === 0 ? 'bg-amber-100 text-amber-700' : 'bg-purple-50 text-purple-600'}">${u.xp} XP</span>
+                </div>
+            `).join('');
+
+            document.getElementById('myRankNumber').innerText = `#${myRankIdx + 1}`;
+            document.getElementById('myTotalXpBadge').innerText = `${myEntry.xp} XP`;
+        }
+
+        // 5. Đồng hồ Pomodoro tập trung học
+        function updatePomodoroDisplay() {
+            const m = String(Math.floor(pomoSeconds / 60)).padStart(2, '0');
+            const s = String(pomoSeconds % 60).padStart(2, '0');
+            document.getElementById('pomodoroDisplay').innerText = `${m}:${s}`;
+        }
+
+        function setPomodoroMode(mins) {
+            clearInterval(pomoInterval);
+            pomoInterval = null;
+            pomoDefaultMins = mins;
+            pomoSeconds = mins * 60;
+            document.getElementById('pomoStartBtn').innerText = '▶ Bắt đầu';
+            document.getElementById('pomoBtn25').className = mins === 25 ? 'px-2 py-0.5 rounded-lg text-[10px] font-bold bg-rose-100 text-rose-600' : 'px-2 py-0.5 rounded-lg text-[10px] font-bold bg-gray-100 text-gray-500';
+            document.getElementById('pomoBtn5').className = mins === 5 ? 'px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-100 text-emerald-600' : 'px-2 py-0.5 rounded-lg text-[10px] font-bold bg-gray-100 text-gray-500';
+            updatePomodoroDisplay();
+        }
+
+        function togglePomodoro() {
+            const btn = document.getElementById('pomoStartBtn');
+            if (pomoInterval) {
+                clearInterval(pomoInterval);
+                pomoInterval = null;
+                btn.innerText = '▶ Tiếp tục';
+                return;
+            }
+            btn.innerText = '⏸ Tạm dừng';
+            pomoInterval = setInterval(() => {
+                pomoSeconds--;
+                updatePomodoroDisplay();
+                if (pomoSeconds <= 0) {
+                    clearInterval(pomoInterval);
+                    pomoInterval = null;
+                    btn.innerText = '▶ Bắt đầu';
+                    showNotice(pomoDefaultMins === 25 ? "🎉 Xuất sắc! Bạn đã hoàn thành 25 phút học tập trung. Nghỉ ngơi 5 phút nhé!" : "⏰ Hết giờ nghỉ rồi, quay lại học tiếp nào!", "🍅");
+                }
+            }, 1000);
+        }
+
+        function resetPomodoro() {
+            setPomodoroMode(pomoDefaultMins);
         }
 
         checkUser();
