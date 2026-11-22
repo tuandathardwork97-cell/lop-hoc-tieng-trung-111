@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tuấn Đạt Hán Ngữ">
-    <meta name="description" content="Nền tảng học tiếng Trung Pinyin, HSK 1-3, Flashcard, Luyện nghe Audio và Tập viết chữ Hán.">
+    <meta name="description" content="Nền tảng học tiếng Trung theo Giáo trình Hán Ngữ Msutong Sơ cấp 1-4, Flashcard, Luyện nghe Audio và Tập viết chữ Hán.">
 
     <!-- Thư viện giao diện, cơ sở dữ liệu và tập viết chữ Hán -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -153,8 +153,8 @@
             <div class="space-y-3">
                 <input type="text" id="fullName" placeholder="Họ và Tên của bạn" class="hidden w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
                 <input type="text" id="username" placeholder="Tên tài khoản (viết liền, không dấu)" class="hidden w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
-                <input type="text" id="email" placeholder="Email hoặc Tên tài khoản" class="w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
-                <input type="password" id="password" placeholder="Mật khẩu (từ 6 ký tự)" class="w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
+                <input type="text" id="email" onkeydown="handleAuthEnter(event)" placeholder="Email hoặc Tên tài khoản" class="w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
+                <input type="password" id="password" onkeydown="handleAuthEnter(event)" placeholder="Mật khẩu (từ 6 ký tự)" class="w-full p-3.5 bg-white/90 border-2 border-pink-100 rounded-2xl text-sm focus:outline-none focus:border-pink-300 transition">
             </div>
 
             <div class="mt-5">
@@ -184,25 +184,25 @@
                 <button onclick="switchTab('quizzes')" id="tabBtn-quizzes" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition">📝 Bài tập & Thi thử</button>
                 <button onclick="switchTab('progress')" id="tabBtn-progress" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-sm transition">📊 Tiến trình & VIP</button>
             </div>
-
-            <!-- ==================== TAB 1: LỘ TRÌNH HSK & BÀI HỌC ==================== -->
+            <!-- ==================== TAB 1: LỘ TRÌNH MSUTONG & BÀI HỌC ==================== -->
             <div id="tab-lessons" class="space-y-5">
                 <!-- Banner chào mừng & chọn cấp độ -->
                 <div class="pastel-card p-5 md:p-6 rounded-3xl bg-gradient-to-r from-pink-50/90 via-white to-purple-50/90">
                     <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
                         <div>
-                            <h2 class="text-lg md:text-xl font-bold text-gray-700">Lộ trình học theo cấp độ 🌸</h2>
-                            <p class="text-xs text-gray-500 mt-0.5">Chọn cấp độ để xem từ vựng, nghe phát âm chuẩn và thực hành ngay.</p>
+                            <h2 class="text-lg md:text-xl font-bold text-gray-700">Lộ trình Giáo trình Hán Ngữ Msutong 🌸</h2>
+                            <p class="text-xs text-gray-500 mt-0.5">Hệ thống bài học giao tiếp hiện đại chuẩn Msutong Sơ cấp 1–4 kèm Audio & Tập viết.</p>
                         </div>
-                        <span class="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-xs font-bold">🔊 Hỗ trợ đọc chậm 0.7x</span>
+                        <span class="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-xs font-bold">🔊 Đọc chuẩn & Chậm 0.7x</span>
                     </div>
 
-                    <!-- Bộ lọc cấp độ -->
+                    <!-- Bộ lọc cấp độ theo Giáo trình Msutong -->
                     <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1" id="levelPills">
-                        <button onclick="selectCurriculumLevel('pinyin')" id="lvlBtn-pinyin" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">🔤 Nhập môn Pinyin</button>
-                        <button onclick="selectCurriculumLevel('hsk1')" id="lvlBtn-hsk1" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">🌱 HSK 1 (Sơ cấp)</button>
-                        <button onclick="selectCurriculumLevel('hsk2')" id="lvlBtn-hsk2" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">🌿 HSK 2 (Giao tiếp)</button>
-                        <button onclick="selectCurriculumLevel('hsk3')" id="lvlBtn-hsk3" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">🌳 HSK 3 (Trung cấp)</button>
+                        <button onclick="selectCurriculumLevel('pinyin')" id="lvlBtn-pinyin" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">🔤 Nhập môn Ngữ âm</button>
+                        <button onclick="selectCurriculumLevel('msutong1')" id="lvlBtn-msutong1" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">📘 Msutong Sơ cấp 1</button>
+                        <button onclick="selectCurriculumLevel('msutong2')" id="lvlBtn-msutong2" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">📗 Msutong Sơ cấp 2</button>
+                        <button onclick="selectCurriculumLevel('msutong3')" id="lvlBtn-msutong3" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">📙 Msutong Sơ cấp 3</button>
+                        <button onclick="selectCurriculumLevel('msutong4')" id="lvlBtn-msutong4" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">📕 Msutong Sơ cấp 4</button>
                         <button onclick="selectCurriculumLevel('classroom')" id="lvlBtn-classroom" class="px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap transition">👩‍🏫 Bài giảng Lớp học</button>
                     </div>
                 </div>
@@ -233,13 +233,15 @@
             <div id="tab-flashcards" class="hidden space-y-6">
                 <!-- Chọn cấp độ cho Flashcard & Audio -->
                 <div class="pastel-card p-4 rounded-3xl flex flex-wrap items-center justify-between gap-3">
-                    <div class="flex items-center gap-2">
-                        <span class="text-sm font-bold text-gray-700">🎯 Chọn cấp độ ôn tập:</span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-sm font-bold text-gray-700">🎯 Chọn giáo trình:</span>
                         <select id="fcLevelSelect" onchange="changeFlashcardLevel()" class="px-3.5 py-2 rounded-2xl bg-pink-50 border border-pink-200 text-rose-600 font-bold text-sm focus:outline-none">
-                            <option value="hsk1">🌱 HSK 1</option>
-                            <option value="hsk2">🌿 HSK 2</option>
-                            <option value="hsk3">🌳 HSK 3</option>
+                            <option value="msutong1">📘 Msutong Sơ cấp 1</option>
+                            <option value="msutong2">📗 Msutong Sơ cấp 2</option>
+                            <option value="msutong3">📙 Msutong Sơ cấp 3</option>
+                            <option value="msutong4">📕 Msutong Sơ cấp 4</option>
                         </select>
+                        <button onclick="shuffleFlashcards()" class="px-3 py-2 rounded-2xl bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200 text-xs font-bold transition">🔀 Trộn thẻ</button>
                     </div>
                     <div class="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3.5 py-1.5 rounded-full">
                         Đã thuộc: <span id="fcMasteredCount">0</span> từ
@@ -364,12 +366,12 @@
             <!-- ==================== TAB 4: BÀI TẬP & THI THỬ ==================== -->
             <div id="tab-quizzes" class="hidden space-y-6">
 
-                <!-- Kho đề luyện tập HSK tích hợp sẵn (có cả câu luyện nghe) -->
+                <!-- Kho đề luyện tập chuẩn Msutong tích hợp sẵn (có cả câu luyện nghe) -->
                 <div id="builtInQuizzesContainer" class="pastel-card p-6 rounded-3xl">
                     <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
                         <div>
-                            <h3 class="text-lg font-bold text-gray-700">🎯 Kho Bài Tập & Thi Thử Chuẩn HSK</h3>
-                            <p class="text-xs text-gray-400">Bao gồm trắc nghiệm từ vựng, ngữ pháp và luyện nghe có chấm điểm tức thì.</p>
+                            <h3 class="text-lg font-bold text-gray-700">🎯 Kho Bài Tập & Kiểm Tra Chuẩn Msutong</h3>
+                            <p class="text-xs text-gray-400">Bám sát Sơ cấp 1–4 gồm Nghe hiểu, Từ vựng, Ngữ pháp và Giải thích đáp án chi tiết.</p>
                         </div>
                     </div>
                     <div id="builtInQuizzesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -425,6 +427,18 @@
                         <button onclick="submitQuiz()" class="btn-pastel-pink text-white px-7 py-3 rounded-2xl font-bold text-sm transition">✅ Nộp bài</button>
                         <button onclick="cancelQuiz()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-5 py-3 rounded-2xl font-bold text-sm transition">Hủy</button>
                     </div>
+                </div>
+
+                <!-- Khu vực Xem lại chi tiết đáp án sau khi nộp bài -->
+                <div id="quizReviewArea" class="hidden pastel-card p-5 md:p-7 rounded-3xl border-2 border-purple-200 space-y-5">
+                    <div class="flex flex-wrap justify-between items-center gap-3 border-b border-purple-100 pb-4">
+                        <div>
+                            <h3 id="reviewQuizTitle" class="text-lg md:text-xl font-bold text-purple-600">📋 Chi tiết bài làm</h3>
+                            <p id="reviewQuizSummary" class="text-xs font-bold text-gray-500 mt-0.5"></p>
+                        </div>
+                        <button onclick="closeQuizReview()" class="btn-pastel-pink text-white px-5 py-2 rounded-2xl text-xs font-bold transition">← Quay lại danh sách đề</button>
+                    </div>
+                    <div id="quizReviewList" class="space-y-4"></div>
                 </div>
 
                 <!-- Danh sách bài kiểm tra của Lớp học (Supabase) -->
@@ -531,7 +545,10 @@
             <div id="resultScore" class="text-4xl font-extrabold text-rose-500 my-3">10 / 10</div>
             <p id="resultDetail" class="text-sm font-semibold text-gray-600"></p>
             <p id="resultMessage" class="text-xs text-gray-400 mt-1 mb-6 zh-text"></p>
-            <button onclick="closeResultModal()" class="w-full btn-pastel-pink text-white py-3 rounded-2xl font-bold text-sm transition">Xem tiến trình 📊</button>
+            <div class="space-y-2.5">
+                <button onclick="openQuizReview()" class="w-full btn-pastel-lavender text-white py-3 rounded-2xl font-bold text-sm transition">🔍 Xem lại đáp án & Giải thích</button>
+                <button onclick="closeResultModal()" class="w-full btn-pastel-pink text-white py-3 rounded-2xl font-bold text-sm transition">Xem bảng điểm 📊</button>
+            </div>
         </div>
     </div>
 
@@ -627,105 +644,206 @@
         let activeQuiz = null;
         let activeQuestions = [];
         let activeQuizIsBuiltIn = false;
+        let lastQuizReviewData = null;
         let timerInterval = null;
-        let localSubmissions = []; // Lưu tạm kết quả cho chế độ Khách hoặc đề tích hợp
+        let localSubmissions = [];
 
         // Trạng thái Flashcard & Tập viết
-        let currentFcLevel = 'hsk1';
+        let currentFcLevel = 'msutong1';
+        let currentFcList = [];
         let currentFcIndex = 0;
         let masteredWords = new Set();
         let hanziWriterInstance = null;
         let currentWritingChar = '好';
 
+        // Khôi phục dữ liệu tiến độ đã lưu trong localStorage
+        try {
+            const savedWords = JSON.parse(localStorage.getItem('td_mastered_words') || '[]');
+            if (Array.isArray(savedWords)) masteredWords = new Set(savedWords);
+            const savedSubs = JSON.parse(localStorage.getItem('td_local_submissions') || '[]');
+            if (Array.isArray(savedSubs)) localSubmissions = savedSubs;
+        } catch (e) { console.warn('Không đọc được localStorage:', e); }
+
+        function persistProgress() {
+            try {
+                localStorage.setItem('td_mastered_words', JSON.stringify([...masteredWords]));
+                localStorage.setItem('td_local_submissions', JSON.stringify(localSubmissions.slice(0, 50)));
+            } catch (e) { console.warn('Không lưu được localStorage:', e); }
+        }
+
         const typeLabels = {
             'bai_tap': '<span class="px-2.5 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-bold">📘 Bài tập</span>',
             'kiem_tra': '<span class="px-2.5 py-1 bg-rose-100 text-rose-600 rounded-full text-xs font-bold">📕 Kiểm tra</span>',
             'on_tap': '<span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">📗 Ôn tập</span>',
-            'hsk': '<span class="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold">🎯 Chuẩn HSK</span>'
+            'msutong': '<span class="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold">🎯 Chuẩn Msutong</span>'
         };
 
-        // ==================== KHO DỮ LIỆU HỌC TẬP CHUẨN HSK 1-3 & AUDIO ====================
+        // Hàm xử lý an toàn chuỗi khi chèn vào HTML/onclick
+        function escAttr(str) {
+            return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        // ==================== KHO DỮ LIỆU GIÁO TRÌNH HÁN NGỮ MSUTONG (SƠ CẤP 1–4) ====================
         const CURRICULUM_DATA = {
             pinyin: [
                 {
-                    title: "Bài 1: 4 Thanh điệu cốt lõi trong tiếng Trung",
-                    desc: "Nắm vững 4 thanh điệu giúp bạn phát âm chuẩn ngay từ ngày đầu.",
-                    grammar: "Thanh 1 (ā): đọc cao và đều | Thanh 2 (á): đọc lên giọng như dấu sắc | Thanh 3 (ǎ): hạ thấp rồi lên nhẹ | Thanh 4 (à): đọc dứt khoát từ cao xuống thấp.",
+                    title: "Nhập môn Bài 1: Thanh điệu & Biến điệu cơ bản (Msutong)",
+                    desc: "Nắm vững 4 thanh điệu và quy tắc biến điệu của hai thanh 3 đi liền nhau (VD: 你好 nǐ hǎo → ní hǎo).",
+                    grammar: "Thanh 1 (ā): cao và đều | Thanh 2 (á): lên giọng dứt khoát | Thanh 3 (ǎ): xuống thấp rồi lên nhẹ | Thanh 4 (à): xuống nhanh, mạnh. Hai thanh 3 liền nhau: âm đầu đọc thành thanh 2.",
                     words: [
-                        { zh: "妈", py: "mā", vi: "Mẹ (Thanh 1)" },
-                        { zh: "麻", py: "má", vi: "Cây gai / Tê (Thanh 2)" },
-                        { zh: "马", py: "mǎ", vi: "Con ngựa (Thanh 3)" },
-                        { zh: "骂", py: "mà", vi: "Mắng (Thanh 4)" }
+                        { zh: "妈", py: "mā", vi: "Mẹ (Thanh 1)", exampleZh: "妈妈好！", exampleVi: "Chào mẹ!" },
+                        { zh: "麻", py: "má", vi: "Cây gai / Tê (Thanh 2)", exampleZh: "有点儿麻。", exampleVi: "Hơi tê một chút." },
+                        { zh: "马", py: "mǎ", vi: "Con ngựa (Thanh 3)", exampleZh: "那是一匹白马。", exampleVi: "Đó là một con ngựa trắng." },
+                        { zh: "骂", py: "mà", vi: "Mắng (Thanh 4)", exampleZh: "别骂人。", exampleVi: "Đừng mắng người khác." }
                     ],
                     dialogue: [
                         { speaker: "A", zh: "你好！", py: "Nǐ hǎo!", vi: "Xin chào!" },
-                        { speaker: "B", zh: "你好！很高兴认识你。", py: "Nǐ hǎo! Hěn gāoxìng rènshi nǐ.", vi: "Chào bạn! Rất vui được làm quen với bạn." }
-                    ]
-                }
-            ],
-            hsk1: [
-                {
-                    title: "HSK 1 - Bài 1: Chào hỏi & Giới thiệu bản thân",
-                    desc: "Mẫu câu giao tiếp thông dụng nhất khi gặp gỡ lần đầu.",
-                    grammar: "Cấu trúc: 我叫 + [Tên] (Tôi tên là...) | 你是 + [Quốc tịch/Nghề nghiệp] + 吗？ (Bạn là ... phải không?)",
-                    words: [
-                        { zh: "你好", py: "nǐ hǎo", vi: "Xin chào", exampleZh: "你好，请问你叫什么名字？", exampleVi: "Xin chào, xin hỏi bạn tên là gì?" },
-                        { zh: "谢谢", py: "xièxie", vi: "Cảm ơn", exampleZh: "谢谢你的帮助！", exampleVi: "Cảm ơn sự giúp đỡ của bạn!" },
-                        { zh: "名字", py: "míngzi", vi: "Tên", exampleZh: "我的名字是阿达。", exampleVi: "Tên của tôi là Đạt." },
-                        { zh: "老师", py: "lǎoshī", vi: "Giáo viên", exampleZh: "她是我的汉语老师。", exampleVi: "Cô ấy là giáo viên tiếng Trung của tôi." }
-                    ],
-                    dialogue: [
-                        { speaker: "Minh", zh: "你好！你叫什么名字？", py: "Nǐ hǎo! Nǐ jiào shénme míngzi?", vi: "Chào bạn! Bạn tên là gì?" },
-                        { speaker: "Lan", zh: "我叫兰，我是越南人。", py: "Wǒ jiào Lán, wǒ shì Yuènán rén.", vi: "Mình tên Lan, mình là người Việt Nam." }
+                        { speaker: "B", zh: "你好！请问您贵姓？", py: "Nǐ hǎo! Qǐngwèn nín guìxìng?", vi: "Xin chào! Xin hỏi quý danh (họ) của ngài là gì?" }
                     ]
                 },
                 {
-                    title: "HSK 1 - Bài 2: Số đếm, Thời gian & Mua sắm cơ bản",
-                    desc: "Học cách hỏi giá tiền và nói thời gian trong ngày.",
-                    grammar: "Hỏi giá tiền: 这个多少钱？(Cái này bao nhiêu tiền?) | Đáp: 五十块 (50 tệ).",
+                    title: "Nhập môn Bài 2: Quy tắc biến điệu của 不 (bù) và 一 (yī)",
+                    desc: "Quy tắc phát âm tự nhiên như người bản xứ ngay từ quyển Msutong Sơ cấp 1.",
+                    grammar: "不 (bù) đứng trước thanh 4 đọc thành bú (VD: 不是 bú shì, 不客气 bú kèqi). 一 (yī) trước thanh 4 đọc thành yí (一个 yí gè), trước thanh 1/2/3 đọc thành yì (一天 yì tiān).",
                     words: [
-                        { zh: "今天", py: "jīntiān", vi: "Hôm nay", exampleZh: "今天天气很好。", exampleVi: "Thời tiết hôm nay rất đẹp." },
-                        { zh: "多少钱", py: "duōshao qián", vi: "Bao nhiêu tiền", exampleZh: "这杯奶茶多少钱？", exampleVi: "Cốc trà sữa này bao nhiêu tiền?" },
-                        { zh: "喜欢", py: "xǐhuan", vi: "Thích", exampleZh: "我非常喜欢学中文。", exampleVi: "Tôi rất thích học tiếng Trung." },
+                        { zh: "不是", py: "bú shì", vi: "Không phải", exampleZh: "我不是老师，我是学生。", exampleVi: "Tôi không phải giáo viên, tôi là học sinh." },
+                        { zh: "不客气", py: "bú kèqi", vi: "Đừng khách sáo", exampleZh: "谢谢你！— 不客气。", exampleVi: "Cảm ơn bạn! — Đừng khách sáo." },
+                        { zh: "一个", py: "yí gè", vi: "Một cái / Một người", exampleZh: "我有一个哥哥。", exampleVi: "Tôi có một người anh trai." },
+                        { zh: "一起", py: "yìqǐ", vi: "Cùng nhau", exampleZh: "我们一起去喝咖啡吧。", exampleVi: "Chúng ta cùng đi uống cà phê nhé." }
+                    ],
+                    dialogue: [
+                        { speaker: "A", zh: "谢谢你！", py: "Xièxie nǐ!", vi: "Cảm ơn bạn!" },
+                        { speaker: "B", zh: "不客气，我们一起学习吧。", py: "Bú kèqi, wǒmen yìqǐ xuéxí ba.", vi: "Đừng khách sáo, chúng ta cùng học nhé." }
+                    ]
+                }
+            ],
+            msutong1: [
+                {
+                    title: "Msutong 1 • Bài 1–2: 你好 & 谢谢你 (Chào hỏi & Cảm ơn)",
+                    desc: "Làm quen cách chào trang trọng (您好), cảm ơn và xin lỗi trong giao tiếp hằng ngày.",
+                    grammar: "Cấu trúc: 您好 (Chào ngài - lịch sự) | 谢谢 (Cảm ơn) ↔ 不客气 (Không có gì) | 对不起 (Xin lỗi) ↔ 没关系 (Không sao đâu).",
+                    words: [
+                        { zh: "你好", py: "nǐ hǎo", vi: "Xin chào", exampleZh: "老师，您好！", exampleVi: "Em chào thầy/cô ạ!" },
+                        { zh: "谢谢", py: "xièxie", vi: "Cảm ơn", exampleZh: "非常谢谢你！", exampleVi: "Cảm ơn bạn rất nhiều!" },
+                        { zh: "对不起", py: "duìbuqǐ", vi: "Xin lỗi", exampleZh: "对不起，我来晚了。", exampleVi: "Xin lỗi, tôi đến muộn rồi." },
+                        { zh: "没关系", py: "méi guānxi", vi: "Không sao đâu", exampleZh: "没关系，请坐。", exampleVi: "Không sao đâu, mời ngồi." },
                         { zh: "再见", py: "zàijiàn", vi: "Tạm biệt", exampleZh: "明天见，再见！", exampleVi: "Hẹn gặp ngày mai, tạm biệt!" }
                     ],
                     dialogue: [
-                        { speaker: "Khách", zh: "请问，这个苹果多少钱？", py: "Qǐngwèn, zhège píngguǒ duōshao qián?", vi: "Xin hỏi, quả táo này bao nhiêu tiền?" },
-                        { speaker: "Chủ quán", zh: "五块钱一个。", py: "Wǔ kuài qián yí gè.", vi: "5 tệ một quả ạ." }
+                        { speaker: "An", zh: "对不起，我迟到了。", py: "Duìbuqǐ, wǒ chídào le.", vi: "Xin lỗi, mình đến trễ rồi." },
+                        { speaker: "Minh", zh: "没关系，快进来坐吧。", py: "Méi guānxi, kuài jìnlái zuò ba.", vi: "Không sao đâu, mau vào ngồi đi." }
+                    ]
+                },
+                {
+                    title: "Msutong 1 • Bài 3–4: 你是哪国人？& 认识你很高兴",
+                    desc: "Hỏi tên, quốc tịch, nghề nghiệp và giới thiệu bản thân trọn vẹn.",
+                    grammar: "Câu chữ 是: Chủ ngữ + 是 / 不是 + Danh từ. Câu hỏi với 吗 và đại từ nghi vấn 什么 (gì), 哪 (nào).",
+                    words: [
+                        { zh: "名字", py: "míngzi", vi: "Tên", exampleZh: "请问你叫什么名字？", exampleVi: "Xin hỏi bạn tên là gì?" },
+                        { zh: "越南", py: "Yuènán", vi: "Việt Nam", exampleZh: "我是越南人，我住在河内。", exampleVi: "Tôi là người Việt Nam, tôi sống ở Hà Nội." },
+                        { zh: "高兴", py: "gāoxìng", vi: "Vui vẻ", exampleZh: "认识你我很高兴。", exampleVi: "Rất vui được làm quen với bạn." },
+                        { zh: "留学", py: "liúxué", vi: "Du học", exampleZh: "她在中国留学。", exampleVi: "Cô ấy đang du học ở Trung Quốc." },
+                        { zh: "老师", py: "lǎoshī", vi: "Giáo viên", exampleZh: "王老师教我们汉语。", exampleVi: "Thầy Vương dạy chúng tôi tiếng Trung." }
+                    ],
+                    dialogue: [
+                        { speaker: "Linh", zh: "你好！你叫什么名字？你是哪国人？", py: "Nǐ hǎo! Nǐ jiào shénme míngzi? Nǐ shì nǎ guó rén?", vi: "Chào bạn! Bạn tên là gì? Bạn là người nước nào?" },
+                        { speaker: "Đạt", zh: "我叫阿达，我是越南人。认识你很高兴！", py: "Wǒ jiào Ādá, wǒ shì Yuènán rén. Rènshi nǐ hěn gāoxìng!", vi: "Mình tên Đạt, mình là người Việt Nam. Rất vui được quen bạn!" }
+                    ]
+                },
+                {
+                    title: "Msutong 1 • Bài 5–6: 你家有几口人？(Gia đình & Sở thích)",
+                    desc: "Giới thiệu thành viên gia đình, dùng lượng từ 口/个 và nói về sở thích cá nhân.",
+                    grammar: "Hỏi số lượng ít (<10): 几 + Lượng từ + Danh từ (你家有几口人？). Phủ định của 有 là 没有 (không có).",
+                    words: [
+                        { zh: "家", py: "jiā", vi: "Nhà / Gia đình", exampleZh: "我家有四口人。", exampleVi: "Nhà tôi có 4 người." },
+                        { zh: "爸爸", py: "bàba", vi: "Bố", exampleZh: "我爸爸是医生。", exampleVi: "Bố tôi là bác sĩ." },
+                        { zh: "喜欢", py: "xǐhuan", vi: "Thích", exampleZh: "我喜欢听音乐和看电影。", exampleVi: "Tôi thích nghe nhạc và xem phim." },
+                        { zh: "咖啡", py: "kāfēi", vi: "Cà phê", exampleZh: "你喜欢喝茶还是喝咖啡？", exampleVi: "Bạn thích uống trà hay uống cà phê?" }
+                    ],
+                    dialogue: [
+                        { speaker: "A", zh: "你家有几口人？", py: "Nǐ jiā yǒu jǐ kǒu rén?", vi: "Nhà bạn có mấy người?" },
+                        { speaker: "B", zh: "我家有四口人：爸爸、妈妈、姐姐和我。", py: "Wǒ jiā yǒu sì kǒu rén: bàba, māma, jiějie hé wǒ.", vi: "Nhà mình có 4 người: bố, mẹ, chị gái và mình." }
                     ]
                 }
             ],
-            hsk2: [
+            msutong2: [
                 {
-                    title: "HSK 2 - Bài 1: Kế hoạch, Sở thích & So sánh",
-                    desc: "Nâng cao câu giao tiếp với cấu trúc so sánh hơn (比) và dự định.",
-                    grammar: "Cấu trúc so sánh: A + 比 + B + Tính từ (A hơn B...). Ví dụ: 今天比昨天冷 (Hôm nay lạnh hơn hôm qua).",
+                    title: "Msutong 2 • Bài 1–2: 你几点起床？(Thời gian & Lịch trình)",
+                    desc: "Cách nói giờ giấc (点, 分, 半, 刻) và kể về lịch sinh hoạt một ngày.",
+                    grammar: "Trạng ngữ chỉ thời gian luôn đứng TRƯỚC động từ: Chủ ngữ + Thời gian + Động từ (我早上七点起床).",
                     words: [
-                        { zh: "准备", py: "zhǔnbèi", vi: "Chuẩn bị", exampleZh: "我准备去中国旅游。", exampleVi: "Tôi chuẩn bị đi du lịch Trung Quốc." },
-                        { zh: "帮助", py: "bāngzhù", vi: "Giúp đỡ", exampleZh: "非常感谢你的帮助。", exampleVi: "Vô cùng cảm ơn sự giúp đỡ của bạn." },
-                        { zh: "便宜", py: "piányi", vi: "Rẻ", exampleZh: "这件衣服很便宜。", exampleVi: "Bộ quần áo này rất rẻ." },
-                        { zh: "希望", py: "xīwàng", vi: "Hy vọng", exampleZh: "我希望明年考过HSK三级。", exampleVi: "Tôi hy vọng năm sau thi đỗ HSK 3." }
+                        { zh: "起床", py: "qǐchuáng", vi: "Thức dậy", exampleZh: "我每天六点半起床。", exampleVi: "Mỗi ngày tôi dậy lúc 6 giờ rưỡi." },
+                        { zh: "上班", py: "shàngbān", vi: "Đi làm", exampleZh: "你几点去上班？", exampleVi: "Mấy giờ bạn đi làm?" },
+                        { zh: "上课", py: "shàngkè", vi: "Vào học / Lên lớp", exampleZh: "我们八点一刻上课。", exampleVi: "Chúng tôi vào học lúc 8 giờ 15." },
+                        { zh: "睡觉", py: "shuìjiào", vi: "Đi ngủ", exampleZh: "晚上别太晚睡觉。", exampleVi: "Buổi tối đừng ngủ muộn quá nhé." }
                     ],
                     dialogue: [
-                        { speaker: "A", zh: "你觉得学汉语难吗？", py: "Nǐ juéde xué Hànyǔ nán ma?", vi: "Bạn thấy học tiếng Trung có khó không?" },
-                        { speaker: "B", zh: "我觉得写汉字比说话难一点。", py: "Wǒ juéde xiě Hànzì bǐ shuōhuà nán yìdiǎn.", vi: "Mình thấy viết chữ Hán khó hơn nói một chút." }
+                        { speaker: "A", zh: "你每天早上几点起床？", py: "Nǐ měitiān zǎoshang jǐ diǎn qǐchuáng?", vi: "Mỗi sáng bạn thức dậy lúc mấy giờ?" },
+                        { speaker: "B", zh: "我七点起床，八点去公司上班。", py: "Wǒ qī diǎn qǐchuáng, bā diǎn qù gōngsī shàngbān.", vi: "Mình dậy lúc 7 giờ, 8 giờ đi đến công ty làm việc." }
+                    ]
+                },
+                {
+                    title: "Msutong 2 • Bài 3–4: 买东西 & 问路 (Mua sắm & Hỏi đường)",
+                    desc: "Mặc cả khi mua quần áo, hỏi giá và chỉ đường đi lại bằng tàu điện/xe buýt.",
+                    grammar: "Cấu trúc chỉ đường: 一直往前走 (đi thẳng về phía trước), 往左/右拐 (rẽ trái/phải) | Hỏi giá: 多少钱？太贵了，便宜一点儿吧！",
+                    words: [
+                        { zh: "便宜", py: "piányi", vi: "Rẻ", exampleZh: "这件毛衣很便宜。", exampleVi: "Chiếc áo len này rất rẻ." },
+                        { zh: "试一下", py: "shì yíxià", vi: "Thử một chút", exampleZh: "我可以试一下这双鞋吗？", exampleVi: "Tôi có thể thử đôi giày này không?" },
+                        { zh: "地铁", py: "dìtiě", vi: "Tàu điện ngầm", exampleZh: "坐地铁去市中心很快。", exampleVi: "Đi tàu điện ngầm ra trung tâm thành phố rất nhanh." },
+                        { zh: "附近", py: "fùjìn", vi: "Gần đây / Xung quanh", exampleZh: "请问附近有银行吗？", exampleVi: "Xin hỏi gần đây có ngân hàng không?" }
+                    ],
+                    dialogue: [
+                        { speaker: "Khách", zh: "这件衣服多少钱？可以便宜一点儿吗？", py: "Zhè jiàn yīfu duōshao qián? Kěyǐ piányi yìdiǎnr ma?", vi: "Cái áo này bao nhiêu tiền? Có thể bớt một chút không?" },
+                        { speaker: "Bán hàng", zh: "一百二十块，不能再便宜了。", py: "Yìbǎi èrshí kuài, bù néng zài piányi le.", vi: "120 tệ, không thể rẻ hơn nữa đâu ạ." }
                     ]
                 }
             ],
-            hsk3: [
+            msutong3: [
                 {
-                    title: "HSK 3 - Bài 1: Công việc, Cảm xúc & Câu chữ 把",
-                    desc: "Làm chủ mẫu câu đặc trưng trong tiếng Trung trung cấp.",
-                    grammar: "Câu chữ 把: Chủ ngữ + 把 + Tân ngữ + Động từ + Thành phần khác (nhấn mạnh tác động làm thay đổi trạng thái của sự vật).",
+                    title: "Msutong 3 • Bài 1–2: 手机支付真方便 (Thanh toán di động & Cuộc sống số)",
+                    desc: "Chủ đề hiện đại đặc trưng của Msutong: quét mã QR, mua hàng online, gọi đồ ăn.",
+                    grammar: "Cấu trúc biểu thị mức độ & kinh nghiệm: 动词 + 过 (Đã từng làm gì) | 不仅……而且…… (Không những... mà còn...).",
                     words: [
-                        { zh: "决定", py: "juédìng", vi: "Quyết định", exampleZh: "他决定留在这里工作。", exampleVi: "Anh ấy quyết định ở lại đây làm việc." },
-                        { zh: "习惯", py: "xíguàn", vi: "Thói quen / Quen", exampleZh: "我已经习惯早起了。", exampleVi: "Tôi đã quen dậy sớm rồi." },
-                        { zh: "解决", py: "jiějué", vi: "Giải quyết", exampleZh: "我们一定能解决这个问题。", exampleVi: "Chúng ta nhất định giải quyết được vấn đề này." },
-                        { zh: "认真", py: "rènzhēn", vi: "Nghiêm túc / Chăm chỉ", exampleZh: "她学习非常认真。", exampleVi: "Cô ấy học tập vô cùng chăm chỉ." }
+                        { zh: "手机支付", py: "shǒujī zhīfù", vi: "Thanh toán di động", exampleZh: "在中国用手机支付非常方便。", exampleVi: "Ở Trung Quốc dùng thanh toán di động rất tiện lợi." },
+                        { zh: "方便", py: "fāngbiàn", vi: "Tiện lợi", exampleZh: "网上买东西既便宜又方便。", exampleVi: "Mua đồ trên mạng vừa rẻ vừa tiện." },
+                        { zh: "外卖", py: "wàimài", vi: "Đồ ăn gọi ship (take-away)", exampleZh: "今天太累了，我们点外卖吧。", exampleVi: "Hôm nay mệt quá, chúng ta đặt đồ ship đi." },
+                        { zh: "打算", py: "dǎsuàn", vi: "Dự định", exampleZh: "假期你打算去哪儿旅游？", exampleVi: "Kỳ nghỉ bạn dự định đi du lịch ở đâu?" }
                     ],
                     dialogue: [
-                        { speaker: "A", zh: "请把今天的作业发给我。", py: "Qǐng bǎ jīntiān de zuòyè fā gěi wǒ.", vi: "Hãy gửi bài tập hôm nay cho tôi nhé." },
-                        { speaker: "B", zh: "好的，我马上发给您。", py: "Hǎo de, wǒ mǎshàng fā gěi nín.", vi: "Vâng, em gửi thầy/cô ngay ạ." }
+                        { speaker: "A", zh: "请问可以扫二维码付款吗？", py: "Qǐngwèn kěyǐ sǎo èrwéimǎ fùkuǎn ma?", vi: "Xin hỏi có thể quét mã QR thanh toán không?" },
+                        { speaker: "B", zh: "可以，微信和支付宝都行。", py: "Kěyǐ, Wēixìn hé Zhīfùbǎo dōu xíng.", vi: "Được ạ, WeChat hay Alipay đều được." }
+                    ]
+                },
+                {
+                    title: "Msutong 3 • Bài 3: 我感冒了 (Sức khỏe & Khám bệnh)",
+                    desc: "Mô tả triệu chứng sức khỏe, lời khuyên chăm sóc bản thân và câu so sánh.",
+                    grammar: "So sánh hơn với 比: A + 比 + B + Tính từ (+ 一点儿 / 得多). Ví dụ: 今天比昨天暖和多了 (Hôm nay ấm hơn hôm qua nhiều).",
+                    words: [
+                        { zh: "感冒", py: "gǎnmào", vi: "Bị cảm cúm", exampleZh: "天气变冷了，注意别感冒。", exampleVi: "Trời trở lạnh rồi, chú ý đừng để bị cảm." },
+                        { zh: "发烧", py: "fāshāo", vi: "Bị sốt", exampleZh: "你发烧了，应该去医院看看。", exampleVi: "Bạn bị sốt rồi, nên đi bệnh viện khám đi." },
+                        { zh: "休息", py: "xiūxi", vi: "Nghỉ ngơi", exampleZh: "多喝热水，好好休息。", exampleVi: "Uống nhiều nước ấm và nghỉ ngơi thật tốt nhé." },
+                        { zh: "锻炼", py: "duànliàn", vi: "Tập thể dục / Rèn luyện", exampleZh: "坚持锻炼对身体很好。", exampleVi: "Kiên trì tập thể dục rất tốt cho sức khỏe." }
+                    ],
+                    dialogue: [
+                        { speaker: "A", zh: "你脸色不太好，怎么了？", py: "Nǐ liǎnsè bú tài hǎo, zěnme le?", vi: "Sắc mặt bạn không tốt lắm, sao thế?" },
+                        { speaker: "B", zh: "我有点儿感冒，头也很疼。", py: "Wǒ yǒudiǎnr gǎnmào, tóu yě hěn téng.", vi: "Mình hơi bị cảm, đầu cũng rất đau." }
+                    ]
+                }
+            ],
+            msutong4: [
+                {
+                    title: "Msutong 4 • Bài 1–2: Câu chữ 把 & 越来越 (Đời sống & Công việc)",
+                    desc: "Sử dụng thành thạo câu chữ 把 và cấu trúc diễn tả sự thay đổi tăng tiến 越来越.",
+                    grammar: "Câu chữ 把: Chủ ngữ + 把 + Tân ngữ + Động từ + Thành phần khác (VD: 请把护照拿出来). Cấu trúc 越来越 + Tính từ (Càng ngày càng...).",
+                    words: [
+                        { zh: "习惯", py: "xíguàn", vi: "Quen / Thói quen", exampleZh: "我越来越习惯这里的生活了。", exampleVi: "Tôi càng ngày càng quen với cuộc sống ở đây rồi." },
+                        { zh: "决定", py: "juédìng", vi: "Quyết định", exampleZh: "他决定毕业后留在这里工作。", exampleVi: "Anh ấy quyết định sau khi tốt nghiệp sẽ ở lại đây làm việc." },
+                        { zh: "解决", py: "jiějué", vi: "Giải quyết", exampleZh: "我们一起把这个问题解决吧。", exampleVi: "Chúng ta cùng nhau giải quyết vấn đề này đi." },
+                        { zh: "认真", py: "rènzhēn", vi: "Nghiêm túc / Chăm chỉ", exampleZh: "她工作一直非常认真。", exampleVi: "Cô ấy làm việc luôn vô cùng nghiêm túc." }
+                    ],
+                    dialogue: [
+                        { speaker: "A", zh: "请把今天的练习发到微信群里。", py: "Qǐng bǎ jīntiān de liànxí fā dào Wēixìn qún lǐ.", vi: "Hãy gửi bài luyện tập hôm nay vào nhóm WeChat nhé." },
+                        { speaker: "B", zh: "好的老师，我检查完马上把作业发过去。", py: "Hǎo de lǎoshī, wǒ jiǎnchá wán mǎshàng bǎ zuòyè fā guòqù.", vi: "Vâng thưa thầy/cô, em kiểm tra xong sẽ gửi bài ngay ạ." }
                     ]
                 }
             ]
@@ -733,41 +851,123 @@
 
         const BUILTIN_QUIZZES = [
             {
-                id: 'builtin_hsk1_vocab',
-                title: '🌱 HSK 1: Từ vựng & Nghe hiểu căn bản',
-                type: 'hsk',
+                id: 'msutong1_test',
+                title: '📘 Msutong Sơ cấp 1: Nghe hiểu & Giao tiếp cơ bản',
+                type: 'msutong',
                 time_limit_minutes: 10,
                 questions: [
-                    { id: 'b1', question_text: 'Bấm loa để nghe và chọn nghĩa đúng:', audio_text: '谢谢你的帮助', options: { A: 'Xin chào bạn', B: 'Cảm ơn sự giúp đỡ của bạn', C: 'Tạm biệt nhé', D: 'Cái này bao nhiêu tiền' }, correct_answer: 'B' },
-                    { id: 'b2', question_text: 'Từ "老师 (lǎoshī)" có nghĩa là gì?', options: { A: 'Học sinh', B: 'Bác sĩ', C: 'Giáo viên', D: 'Bạn bè' }, correct_answer: 'C' },
-                    { id: 'b3', question_text: 'Điền từ thích hợp: "我非常___学中文。" (Tôi rất thích học tiếng Trung)', options: { A: '喜欢 (xǐhuan)', B: '再见 (zàijiàn)', C: '名字 (míngzi)', D: '今天 (jīntiān)' }, correct_answer: 'A' },
-                    { id: 'b4', question_text: 'Bấm loa nghe câu hỏi và chọn câu trả lời phù hợp:', audio_text: '你叫什么名字？', options: { A: '五块钱', B: '我叫阿达', C: '今天天气很好', D: '不用谢' }, correct_answer: 'B' }
+                    {
+                        id: 'm1_1',
+                        question_text: 'Bấm loa nghe câu nói và chọn câu đáp lại tự nhiên nhất:',
+                        audio_text: '对不起，我来晚了。',
+                        options: { A: '不客气', B: '没关系', C: '谢谢你', D: '再见' },
+                        correct_answer: 'B',
+                        explanation: 'Người nói xin lỗi "对不起，我来晚了" (Xin lỗi, tôi đến muộn rồi) → Đáp lại là "没关系" (Không sao đâu).'
+                    },
+                    {
+                        id: 'm1_2',
+                        question_text: 'Trong cụm từ "不客气" (Đừng khách sáo), chữ "不" đọc theo quy tắc biến điệu là gì?',
+                        options: { A: 'bū (thanh 1)', B: 'bú (thanh 2)', C: 'bǔ (thanh 3)', D: 'bù (thanh 4)' },
+                        correct_answer: 'B',
+                        explanation: 'Chữ 不 đứng trước âm tiết mang thanh 4 (客 kè) sẽ biến điệu thành thanh 2: bú kèqi.'
+                    },
+                    {
+                        id: 'm1_3',
+                        question_text: 'Điền lượng từ đúng cho câu hỏi số thành viên gia đình: "你家有几___人？"',
+                        options: { A: '本 (běn)', B: '件 (jiàn)', C: '口 (kǒu)', D: '杯 (bēi)' },
+                        correct_answer: 'C',
+                        explanation: 'Trong Msutong Sơ cấp 1, khi hỏi số nhân khẩu trong gia đình ta dùng lượng từ 口 (kǒu).'
+                    },
+                    {
+                        id: 'm1_4',
+                        question_text: 'Bấm loa nghe câu hỏi và chọn câu trả lời đúng:',
+                        audio_text: '你是哪国人？',
+                        options: { A: '我叫阿达', B: '我是越南人', C: '我家有四口人', D: '我喜欢喝咖啡' },
+                        correct_answer: 'B',
+                        explanation: 'Câu hỏi "你是哪国人？" (Bạn là người nước nào?) → Trả lời đúng là "我是越南人" (Tôi là người Việt Nam).'
+                    }
                 ]
             },
             {
-                id: 'builtin_hsk2_3_mix',
-                title: '🌿 HSK 2–3: Ngữ pháp so sánh & Giao tiếp',
-                type: 'hsk',
+                id: 'msutong2_test',
+                title: '📗 Msutong Sơ cấp 2: Giờ giấc, Mua sắm & Hỏi đường',
+                type: 'msutong',
+                time_limit_minutes: 10,
+                questions: [
+                    {
+                        id: 'm2_1',
+                        question_text: 'Chọn câu có trật tự từ ĐÚNG cho "Mỗi ngày tôi thức dậy lúc 6 giờ rưỡi":',
+                        options: { A: '我起床每天六点半', B: '我每天六点半起床', C: '六点半起床我每天', D: '我每天起床六点半' },
+                        correct_answer: 'B',
+                        explanation: 'Trạng ngữ chỉ thời gian (每天六点半) luôn đặt TRƯỚC động từ (起床).'
+                    },
+                    {
+                        id: 'm2_2',
+                        question_text: 'Bấm loa nghe và chọn nghĩa đúng:',
+                        audio_text: '这件衣服可以便宜一点儿吗？',
+                        options: { A: 'Cái áo này có thể thử một chút không?', B: 'Cái áo này màu gì vậy?', C: 'Cái áo này có thể rẻ hơn một chút không?', D: 'Gần đây có cửa hàng quần áo không?' },
+                        correct_answer: 'C',
+                        explanation: '便宜一点儿 (piányi yìdiǎnr) nghĩa là "rẻ hơn một chút / bớt giá một chút".'
+                    },
+                    {
+                        id: 'm2_3',
+                        question_text: 'Trong cụm "八点一刻" (bā diǎn yí kè), "一刻" là bao nhiêu phút?',
+                        options: { A: '5 phút', B: '10 phút', C: '15 phút', D: '30 phút' },
+                        correct_answer: 'C',
+                        explanation: 'Một khắc (一刻) bằng 15 phút. 八点一刻 là 8 giờ 15 phút.'
+                    }
+                ]
+            },
+            {
+                id: 'msutong3_4_test',
+                title: '📙 Msutong Sơ cấp 3–4: Đời sống số, So sánh & Câu chữ 把',
+                type: 'msutong',
                 time_limit_minutes: 12,
                 questions: [
-                    { id: 'b5', question_text: 'Chọn câu đúng ngữ pháp cho "Hôm nay lạnh hơn hôm qua":', options: { A: '今天比昨天冷', B: '今天昨天比冷', C: '比今天昨天冷', D: '今天冷比昨天' }, correct_answer: 'A' },
-                    { id: 'b6', question_text: 'Bấm loa nghe và chọn nghĩa của từ vựng:', audio_text: '我已经习惯早起了', options: { A: 'Tôi quyết định đi du lịch', B: 'Bộ quần áo này rất rẻ', C: 'Tôi đã quen dậy sớm rồi', D: 'Hãy gửi bài tập cho tôi' }, correct_answer: 'C' },
-                    { id: 'b7', question_text: 'Từ "解决 (jiějué)" thường đi với danh từ nào sau đây?', options: { A: '问题 (vấn đề)', B: '苹果 (quả táo)', C: '奶茶 (trà sữa)', D: '衣服 (quần áo)' }, correct_answer: 'A' }
+                    {
+                        id: 'm3_1',
+                        question_text: 'Bấm loa nghe câu nói về chủ đề thanh toán di động và chọn ý đúng:',
+                        audio_text: '在中国用手机支付非常方便。',
+                        options: { A: 'Ở Trung Quốc dùng thanh toán di động rất tiện lợi', B: 'Ở Trung Quốc mua điện thoại rất rẻ', C: 'Tôi quên mang điện thoại khi ra ngoài', D: 'Hôm nay chúng ta gọi đồ ăn ship nhé' },
+                        correct_answer: 'A',
+                        explanation: '手机支付 (shǒujī zhīfù) là thanh toán bằng điện thoại, 非常方便 là vô cùng tiện lợi.'
+                    },
+                    {
+                        id: 'm3_2',
+                        question_text: 'Chọn câu đúng ngữ pháp với cấu trúc so sánh 比:',
+                        options: { A: '今天暖和比昨天多了', B: '今天比昨天暖和多了', C: '比今天昨天暖和多了', D: '今天昨天比暖和多了' },
+                        correct_answer: 'B',
+                        explanation: 'Cấu trúc chuẩn: A + 比 + B + Tính từ + 多了 (A hơn B nhiều).'
+                    },
+                    {
+                        id: 'm3_3',
+                        question_text: 'Điền từ thích hợp vào câu chữ 把: "请___今天的作业发给我。"',
+                        options: { A: '比 (bǐ)', B: '把 (bǎ)', C: '给 (gěi)', D: '在 (zài)' },
+                        correct_answer: 'B',
+                        explanation: 'Câu chữ 把 nhấn mạnh hành động tác động lên tân ngữ "今天的作业" (bài tập hôm nay): đưa/gửi bài tập cho tôi.'
+                    },
+                    {
+                        id: 'm3_4',
+                        question_text: 'Hoàn thành câu: "我___习惯这里的生活了。" (Tôi càng ngày càng quen với cuộc sống ở đây rồi)',
+                        options: { A: '越来越', B: '一点儿', C: '没关系', D: '一直' },
+                        correct_answer: 'A',
+                        explanation: '越来越 + Tính từ / Động từ tâm lý diễn tả mức độ tăng tiến "càng ngày càng...".'
+                    }
                 ]
             }
         ];
 
         const HANZI_PRESETS = [
-            { char: '好', py: 'hǎo', vi: 'Tốt, khỏe, hay' },
-            { char: '你', py: 'nǐ', vi: 'Bạn, anh, chị' },
-            { char: '我', py: 'wǒ', vi: 'Tôi, mình' },
-            { char: '学', py: 'xué', vi: 'Học tập' },
-            { char: '中', py: 'zhōng', vi: 'Ở giữa, Trung Quốc' },
-            { char: '文', py: 'wén', vi: 'Văn tự, ngôn ngữ' },
-            { char: '爱', py: 'ài', vi: 'Yêu, thích' },
-            { char: '谢', py: 'xiè', vi: 'Cảm ơn' },
-            { char: '家', py: 'jiā', vi: 'Gia đình, nhà' },
-            { char: '梦', py: 'mèng', vi: 'Giấc mơ' }
+            { char: '好', py: 'hǎo', vi: 'Tốt, khỏe (Bài 1 - Msutong 1)' },
+            { char: '谢', py: 'xiè', vi: 'Cảm ơn (Bài 2 - Msutong 1)' },
+            { char: '国', py: 'guó', vi: 'Đất nước (Bài 3 - Msutong 1)' },
+            { char: '家', py: 'jiā', vi: 'Gia đình (Bài 5 - Msutong 1)' },
+            { char: '喜', py: 'xǐ', vi: 'Vui, thích (Bài 6 - Msutong 1)' },
+            { char: '点', py: 'diǎn', vi: 'Giờ, gọi món (Msutong 2)' },
+            { char: '买', py: 'mǎi', vi: 'Mua (Msutong 2)' },
+            { char: '路', py: 'lù', vi: 'Con đường (Msutong 2)' },
+            { char: '付', py: 'fù', vi: 'Thanh toán (Msutong 3)' },
+            { char: '把', py: 'bǎ', vi: 'Giới từ 把 (Msutong 4)' }
         ];
 
         // ==================== PHÁT ÂM TIẾNG TRUNG TỰ ĐỘNG (TTS) ====================
@@ -784,13 +984,21 @@
                 const voices = window.speechSynthesis.getVoices();
                 const zhVoice = voices.find(v => v.lang && (v.lang.includes('zh-CN') || v.lang.includes('zh_CN') || v.lang.startsWith('zh')));
                 if (zhVoice) utter.voice = zhVoice;
-                window.speechSynthesis.speak(utter);
+                setTimeout(() => window.speechSynthesis.speak(utter), 40);
             } catch (e) {
                 console.error("Lỗi TTS:", e);
             }
         }
         if ('speechSynthesis' in window) {
             window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+        }
+
+        // Hỗ trợ phím Enter để đăng nhập / đăng ký nhanh
+        function handleAuthEnter(e) {
+            if (e.key !== 'Enter') return;
+            const isReg = !document.getElementById('btnSubmitRegister').classList.contains('hidden');
+            if (isReg) register();
+            else login();
         }
 
         // ==================== HỘP THOẠI THÔNG BÁO PASTEL ====================
@@ -851,7 +1059,7 @@
                 document.getElementById('progressTitle').innerText = '📊 Lịch sử làm bài của tôi';
             }
 
-            selectCurriculumLevel('hsk1');
+            selectCurriculumLevel('msutong1');
             renderBuiltInQuizzes();
             initHanziPresets();
             changeFlashcardLevel();
@@ -965,42 +1173,52 @@
             document.getElementById('authTab-register').className = isRegister
                 ? 'flex-1 py-2 rounded-xl text-sm font-bold bg-white text-emerald-600 shadow-sm transition'
                 : 'flex-1 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-gray-600 transition';
+
             showMessage("");
         }
 
         function showMessage(msg, color = "#E11D48") {
             const el = document.getElementById('authMessage');
+            if (!el) return;
             el.innerText = msg;
             el.style.color = color;
         }
 
-        // ==================== CHUYỂN TAB (ĐỒNG BỘ DESKTOP & MOBILE APP) ====================
         function switchTab(tabName) {
             const tabs = ['lessons', 'flashcards', 'writing', 'quizzes', 'progress'];
             tabs.forEach(t => {
-                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const panel = document.getElementById(`tab-${t}`);
+                if (panel) panel.classList.add('hidden');
+
                 const deskBtn = document.getElementById(`tabBtn-${t}`);
                 if (deskBtn) deskBtn.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-sm text-gray-500 hover:bg-pink-50 transition';
+
                 const mobBtn = document.getElementById(`mobBtn-${t}`);
                 if (mobBtn) mobBtn.className = 'flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-gray-400 transition';
             });
 
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            const activeDesk = document.getElementById(`tabBtn-${tabName}`);
-            if (activeDesk) activeDesk.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-sm btn-pastel-pink text-white transition';
-            const activeMob = document.getElementById(`mobBtn-${tabName}`);
-            if (activeMob) activeMob.className = 'flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-rose-500 bg-pink-50 transition';
+            const activePanel = document.getElementById(`tab-${tabName}`);
+            if (activePanel) activePanel.classList.remove('hidden');
 
-            if (tabName === 'writing') renderHanziWriter(currentWritingChar);
+            const activeDeskBtn = document.getElementById(`tabBtn-${tabName}`);
+            if (activeDeskBtn) activeDeskBtn.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-sm btn-pastel-pink text-white transition';
+
+            const activeMobBtn = document.getElementById(`mobBtn-${tabName}`);
+            if (activeMobBtn) activeMobBtn.className = 'flex flex-col items-center justify-center py-1 rounded-xl text-[10px] font-bold text-rose-500 bg-pink-50 transition';
+
+            if (tabName === 'writing') {
+                setTimeout(() => renderHanziWriter(currentWritingChar), 50);
+            }
             if (tabName === 'progress') loadProgress();
             if (tabName === 'quizzes' && !isGuestMode) loadQuizzes();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ==================== TAB 1: LỘ TRÌNH HSK & LỚP HỌC ====================
+        // ==================== TAB 1: LỘ TRÌNH MSUTONG & LỚP HỌC ====================
         function selectCurriculumLevel(level) {
-            ['pinyin', 'hsk1', 'hsk2', 'hsk3', 'classroom'].forEach(l => {
+            ['pinyin', 'msutong1', 'msutong2', 'msutong3', 'msutong4', 'classroom'].forEach(l => {
                 const btn = document.getElementById(`lvlBtn-${l}`);
+                if (!btn) return;
                 btn.className = (l === level)
                     ? 'px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap btn-pastel-pink text-white transition'
                     : 'px-4 py-2 rounded-2xl text-xs md:text-sm font-bold whitespace-nowrap bg-white border border-pink-100 text-gray-500 hover:bg-pink-50 transition';
@@ -1019,7 +1237,7 @@
             currDiv.classList.remove('hidden');
 
             const lessons = CURRICULUM_DATA[level] || [];
-            currDiv.innerHTML = lessons.map(item => `
+            currDiv.innerHTML = lessons.map((item, lessonIdx) => `
                 <div class="pastel-card p-5 md:p-6 rounded-3xl space-y-4">
                     <div>
                         <h3 class="text-lg font-bold text-rose-500">${item.title}</h3>
@@ -1041,9 +1259,9 @@
                                         <div class="text-xs text-gray-500">${w.vi}</div>
                                     </div>
                                     <div class="flex items-center gap-1.5">
-                                        <button onclick="speakChinese('${w.zh}', 0.95)" title="Đọc chuẩn" class="w-8 h-8 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-500 text-xs flex items-center justify-center transition">🔊</button>
-                                        <button onclick="speakChinese('${w.zh}', 0.65)" title="Đọc chậm" class="w-8 h-8 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-500 text-xs flex items-center justify-center transition">🐢</button>
-                                        <button onclick="jumpToWrite('${w.zh.charAt(0)}')" title="Tập viết chữ đầu" class="w-8 h-8 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-xs flex items-center justify-center transition">✍️</button>
+                                        <button onclick="speakChinese('${escAttr(w.zh)}', 0.95)" title="Đọc chuẩn" class="w-8 h-8 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-500 text-xs flex items-center justify-center transition">🔊</button>
+                                        <button onclick="speakChinese('${escAttr(w.zh)}', 0.65)" title="Đọc chậm" class="w-8 h-8 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-500 text-xs flex items-center justify-center transition">🐢</button>
+                                        <button onclick="jumpToWrite('${escAttr(w.zh.charAt(0))}', '${escAttr(w.py)}', '${escAttr(w.vi)}')" title="Tập viết chữ đầu" class="w-8 h-8 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-xs flex items-center justify-center transition">✍️</button>
                                     </div>
                                 </div>
                             `).join('')}
@@ -1051,7 +1269,10 @@
                     </div>
 
                     <div>
-                        <p class="text-xs font-bold text-gray-500 mb-2">💬 Hội thoại mẫu (Audio):</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <p class="text-xs font-bold text-gray-500">💬 Hội thoại mẫu (Audio):</p>
+                            <button onclick="playFullDialogue('${level}', ${lessonIdx})" class="px-3 py-1 rounded-full bg-purple-100 hover:bg-purple-200 text-purple-700 text-[11px] font-bold transition">▶ Nghe cả đoạn</button>
+                        </div>
                         <div class="space-y-2">
                             ${item.dialogue.map(d => `
                                 <div class="flex items-start justify-between gap-2 p-3 rounded-2xl bg-pink-50/40 border border-pink-100">
@@ -1061,7 +1282,7 @@
                                         <div class="text-xs text-purple-500">${d.py}</div>
                                         <div class="text-xs text-gray-500">${d.vi}</div>
                                     </div>
-                                    <button onclick="speakChinese('${d.zh}', 0.9)" class="shrink-0 px-2.5 py-1 rounded-full bg-white border border-pink-200 text-rose-500 text-xs font-bold hover:bg-pink-50 transition">🔊 Nghe</button>
+                                    <button onclick="speakChinese('${escAttr(d.zh)}', 0.9)" class="shrink-0 px-2.5 py-1 rounded-full bg-white border border-pink-200 text-rose-500 text-xs font-bold hover:bg-pink-50 transition">🔊 Nghe</button>
                                 </div>
                             `).join('')}
                         </div>
@@ -1070,31 +1291,58 @@
             `).join('');
         }
 
-        function jumpToWrite(char) {
+        function playFullDialogue(level, lessonIdx) {
+            const lesson = (CURRICULUM_DATA[level] || [])[lessonIdx];
+            if (!lesson || !lesson.dialogue) return;
+            const fullText = lesson.dialogue.map(d => d.zh).join('。 ');
+            speakChinese(fullText, 0.88);
+        }
+
+        function jumpToWrite(char, py = '', vi = '') {
             currentWritingChar = char;
+            document.getElementById('currentHanziChar').innerText = char;
+            document.getElementById('currentHanziPinyin').innerText = py || 'Chữ trong bài';
+            document.getElementById('currentHanziMeaning').innerText = vi ? `Nghĩa: ${vi}` : 'Tập viết theo thứ tự nét chuẩn.';
             switchTab('writing');
         }
 
         // ==================== TAB 2: FLASHCARD & KHO AUDIO ====================
+        const LEVEL_DISPLAY_NAMES = {
+            msutong1: 'Msutong 1',
+            msutong2: 'Msutong 2',
+            msutong3: 'Msutong 3',
+            msutong4: 'Msutong 4'
+        };
+
         function getWordsByLevel(lvl) {
             const lessons = CURRICULUM_DATA[lvl] || [];
-            return lessons.flatMap(l => l.words.map(w => ({ ...w, levelLabel: lvl.toUpperCase() })));
+            const label = LEVEL_DISPLAY_NAMES[lvl] || lvl.toUpperCase();
+            return lessons.flatMap(l => l.words.map(w => ({ ...w, levelLabel: label })));
         }
 
         function currentFcWord() {
-            const list = getWordsByLevel(currentFcLevel);
-            return list[currentFcIndex] || { zh: '你好', py: 'nǐ hǎo', vi: 'Xin chào', exampleZh: '你好！', exampleVi: 'Xin chào!', levelLabel: 'HSK1' };
+            return currentFcList[currentFcIndex] || { zh: '你好', py: 'nǐ hǎo', vi: 'Xin chào', exampleZh: '你好！', exampleVi: 'Xin chào!', levelLabel: 'Msutong 1' };
         }
 
         function changeFlashcardLevel() {
             currentFcLevel = document.getElementById('fcLevelSelect').value;
+            currentFcList = getWordsByLevel(currentFcLevel);
             currentFcIndex = 0;
             renderFlashcard();
             renderAudioLibrary();
         }
 
+        function shuffleFlashcards() {
+            for (let i = currentFcList.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentFcList[i], currentFcList[j]] = [currentFcList[j], currentFcList[i]];
+            }
+            currentFcIndex = 0;
+            renderFlashcard();
+        }
+
         function renderFlashcard() {
-            const list = getWordsByLevel(currentFcLevel);
+            const list = currentFcList;
             const word = currentFcWord();
             document.getElementById('flashcardInner').classList.remove('is-flipped');
             document.getElementById('fcCounter').innerText = `${currentFcIndex + 1} / ${list.length}`;
@@ -1113,20 +1361,21 @@
         }
 
         function nextFlashcard() {
-            const list = getWordsByLevel(currentFcLevel);
-            currentFcIndex = (currentFcIndex + 1) % list.length;
+            if (!currentFcList.length) return;
+            currentFcIndex = (currentFcIndex + 1) % currentFcList.length;
             renderFlashcard();
         }
 
         function prevFlashcard() {
-            const list = getWordsByLevel(currentFcLevel);
-            currentFcIndex = (currentFcIndex - 1 + list.length) % list.length;
+            if (!currentFcList.length) return;
+            currentFcIndex = (currentFcIndex - 1 + currentFcList.length) % currentFcList.length;
             renderFlashcard();
         }
 
         function markFlashcardMastered() {
             const word = currentFcWord();
             masteredWords.add(word.zh);
+            persistProgress();
             nextFlashcard();
         }
 
@@ -1146,8 +1395,8 @@
                         ${showVi ? `<div class="text-xs text-gray-500 mt-0.5">${line.vi}</div>` : ''}
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="speakChinese('${line.zh}', 0.95)" class="px-3.5 py-2 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold transition">▶ 1.0x</button>
-                        <button onclick="speakChinese('${line.zh}', 0.65)" class="px-3.5 py-2 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-600 text-xs font-bold transition">🐢 0.7x</button>
+                        <button onclick="speakChinese('${escAttr(line.zh)}', 0.95)" class="px-3.5 py-2 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold transition">▶ 1.0x</button>
+                        <button onclick="speakChinese('${escAttr(line.zh)}', 0.65)" class="px-3.5 py-2 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-600 text-xs font-bold transition">🐢 0.7x</button>
                     </div>
                 </div>
             `).join('');
@@ -1227,15 +1476,14 @@
                 }
             });
         }
-
-        // ==================== TAB 4: BÀI TẬP CHUẨN HSK & LỚP HỌC ====================
+        // ==================== TAB 4: BÀI TẬP CHUẨN MSUTONG & LỚP HỌC ====================
         function renderBuiltInQuizzes() {
             const container = document.getElementById('builtInQuizzesList');
             container.innerHTML = BUILTIN_QUIZZES.map(q => `
                 <div class="p-5 rounded-2xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-100 hover:shadow-md transition flex flex-col justify-between gap-4">
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            ${typeLabels['hsk']}
+                            ${typeLabels['msutong']}
                             <span class="text-xs font-bold text-gray-400 bg-white px-2.5 py-1 rounded-full border border-purple-100">⏱ ${q.time_limit_minutes} phút • ${q.questions.length} câu</span>
                         </div>
                         <h4 class="font-bold text-gray-700 text-base">${q.title}</h4>
@@ -1255,6 +1503,7 @@
         }
 
         function openQuizRunner(title, questions, minutes) {
+            document.getElementById('quizReviewArea').classList.add('hidden');
             document.getElementById('builtInQuizzesContainer').classList.add('hidden');
             document.getElementById('quizListContainer').classList.add('hidden');
             document.getElementById('teacherQuizPanel').classList.add('hidden');
@@ -1273,8 +1522,8 @@
                             </p>
                             ${q.audio_text ? `
                                 <div class="flex gap-1.5">
-                                    <button type="button" onclick="speakChinese('${q.audio_text}', 0.9)" class="px-3.5 py-1.5 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-xs font-bold transition">🔊 Nghe câu hỏi</button>
-                                    <button type="button" onclick="speakChinese('${q.audio_text}', 0.65)" class="px-3 py-1.5 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 text-xs font-bold transition">🐢 Chậm</button>
+                                    <button type="button" onclick="speakChinese('${escAttr(q.audio_text)}', 0.9)" class="px-3.5 py-1.5 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-xs font-bold transition">🔊 Nghe câu hỏi</button>
+                                    <button type="button" onclick="speakChinese('${escAttr(q.audio_text)}', 0.65)" class="px-3.5 py-1.5 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 text-xs font-bold transition">🐢 Chậm</button>
                                 </div>
                             ` : ''}
                         </div>
@@ -1497,14 +1746,25 @@
 
             const score = Math.round((correctCount / activeQuestions.length) * 10 * 10) / 10;
 
+            // Lưu dữ liệu để học viên xem lại chi tiết đáp án
+            lastQuizReviewData = {
+                title: activeQuiz.title,
+                score,
+                correctCount,
+                total: activeQuestions.length,
+                questions: [...activeQuestions],
+                answers: { ...answers }
+            };
+
             if (activeQuizIsBuiltIn || isGuestMode) {
                 localSubmissions.unshift({
                     name: document.getElementById('userNameDisplay').innerText || 'Học viên',
                     title: activeQuiz.title,
-                    type: activeQuiz.type || 'hsk',
+                    type: activeQuiz.type || 'msutong',
                     score: score,
                     submitted_at: new Date().toISOString()
                 });
+                persistProgress();
                 showQuizResultPopup(score, correctCount);
             } else {
                 const { error } = await supabaseClient.from('submissions').insert([{
@@ -1517,6 +1777,50 @@
                 if (error) showNotice("Lỗi khi nộp bài: " + error.message, "❌");
                 else showQuizResultPopup(score, correctCount);
             }
+        }
+
+        function openQuizReview() {
+            document.getElementById('resultModal').classList.add('hidden');
+            if (!lastQuizReviewData) return;
+
+            document.getElementById('builtInQuizzesContainer').classList.add('hidden');
+            document.getElementById('quizListContainer').classList.add('hidden');
+            document.getElementById('teacherQuizPanel').classList.add('hidden');
+            document.getElementById('activeQuizArea').classList.add('hidden');
+            document.getElementById('quizReviewArea').classList.remove('hidden');
+
+            document.getElementById('reviewQuizTitle').innerText = `📋 Đáp án: ${lastQuizReviewData.title}`;
+            document.getElementById('reviewQuizSummary').innerText = `Điểm: ${lastQuizReviewData.score} / 10 • Đúng ${lastQuizReviewData.correctCount} / ${lastQuizReviewData.total} câu`;
+
+            document.getElementById('quizReviewList').innerHTML = lastQuizReviewData.questions.map((q, idx) => {
+                const userAns = lastQuizReviewData.answers[q.id];
+                const isRight = userAns === q.correct_answer;
+                const badge = isRight
+                    ? '<span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">✅ Đúng</span>'
+                    : '<span class="px-2.5 py-0.5 bg-rose-100 text-rose-600 rounded-full text-xs font-bold">❌ Sai</span>';
+
+                return `
+                    <div class="p-4 rounded-2xl border-2 ${isRight ? 'border-emerald-100 bg-emerald-50/30' : 'border-rose-100 bg-rose-50/30'} space-y-2">
+                        <div class="flex justify-between items-start gap-2">
+                            <p class="font-bold text-sm md:text-base text-gray-800 zh-text">Câu ${idx + 1}: ${q.question_text}</p>
+                            ${badge}
+                        </div>
+                        ${q.audio_text ? `<div class="text-xs text-purple-600 font-bold zh-text">🔊 Nội dung nghe: ${q.audio_text} <button onclick="speakChinese('${escAttr(q.audio_text)}', 0.9)" class="ml-1 underline text-rose-500">Nghe lại</button></div>` : ''}
+                        <div class="text-xs md:text-sm space-y-1">
+                            <p>Bạn chọn: <strong class="${isRight ? 'text-emerald-600' : 'text-rose-600'}">${userAns ? `${userAns}. ${q.options[userAns] || ''}` : '(Chưa chọn)'}</strong></p>
+                            ${!isRight ? `<p>Đáp án đúng: <strong class="text-emerald-600">${q.correct_answer}. ${q.options[q.correct_answer] || ''}</strong></p>` : ''}
+                        </div>
+                        ${q.explanation ? `<div class="text-xs text-gray-600 bg-white/90 p-3 rounded-xl border border-pink-100">💡 <strong>Giải thích:</strong> ${q.explanation}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function closeQuizReview() {
+            document.getElementById('quizReviewArea').classList.add('hidden');
+            document.getElementById('builtInQuizzesContainer').classList.remove('hidden');
+            document.getElementById('quizListContainer').classList.remove('hidden');
+            if (currentUserRole === 'teacher' && !isGuestMode) document.getElementById('teacherQuizPanel').classList.remove('hidden');
         }
 
         function showQuizResultPopup(score, correctCount) {
